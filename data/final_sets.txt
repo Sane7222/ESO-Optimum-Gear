@@ -1,0 +1,167 @@
+Balorgh &
+D: [129, 36]
+P: [840]
+
+Domihaus &
+M: [1096]
+F: [120.0]
+D: [200]
+
+Ilambris &
+M: [1096]
+F: [99.886875]
+
+Kjalnar's Nightmare &
+D: [129]
+F: [296.133333]
+
+Lady Malygda &
+P: [1487]
+F: [108.133333]
+
+Molag Kena &
+D: [129, 560]
+
+Slimecraw &
+C: [3.5205479452054793]
+B: [0.05]
+
+Zaan &
+C: [3.0]
+F: [2254.692]
+
+Archer's Mind M
+C: [3.0, 3.0]
+CD: [8.0]
+
+Arms of Relequen M
+C: [3.0, 3.0]
+S: [0.05]
+F: [520.0]
+
+Auroran's Thunder L
+D: [129]
+P: [1487]
+F: [198.0]
+
+Back-Alley Gourmand L
+C: [3.0, 3.0]
+D: [129]
+CD: [13.0]
+
+Bahsei's Mania L
+D: [129]
+S: [0.05]
+C: [3.0]
+DM: [0.06]
+
+Briarheart M
+C: [3.0, 3.0]
+D: [251]
+
+Bright-Throat's Boast L
+M: [1096, 1096, 2000]
+
+Burning Spellweave L
+M: [1096]
+D: [129, 327]
+C: [3.0]
+
+Caluurion's Legacy L
+C: [3.0, 3.0]
+D: [129]
+F: [54.3552]
+
+Claw of the Forest Wraith B
+C: [3.0, 3.0, 3.7]
+D: [129]
+
+Coldharbour's Favorite B
+M: [1096]
+D: [129]
+F: [235.2]
+
+Crafty Alfiq L
+M: [1096, 1096, 1096, 2550]
+
+Dark Convergence L
+M: [1096]
+P: [1487]
+D: [129]
+F: [65.68]
+
+Defiler M
+D: [129]
+C: [3.0, 3.0]
+F: [165.66213167559474]
+
+Dragonguard Elite M
+C: [3.0, 12.5570776]
+D: [129]
+
+Draugrkin's Grip L
+M: [1096]
+P: [1487]
+F: [330.0]
+
+Elemental Catalyst L
+M: [1096, 1096]
+C: [3.0]
+CD: [15.0]
+
+Elemental Succession L
+M: [1096, 1096]
+D: [129, 271]
+
+Essence Thief M
+D: [129]
+DM: [0.1]
+
+Flame Blossom L
+M: [1096]
+D: [129]
+P: [1487]
+F: [153.7]
+
+Flanking Strategist M
+C: [3.0]
+D: [129, 400]
+
+Galerion's Revenge B
+C: [3.0]
+D: [129]
+F: [292.4]
+
+Grave Inevitability L
+C: [3.0, 3.0]
+D: [129]
+CD: [20.0]
+
+Grisly Gourmet M
+D: [129]
+P: [1487]
+CD: [6.6]
+
+Gryphon's Reprisal M
+C: [3.0, 3.0]
+P: [1487]
+F: [72.3216]
+
+Heartland Conqueror B
+D: [129]
+M: [1096]
+C: [7.2]
+
+Hunding's Rage B
+C: [3.0, 3.0]
+D: [300]
+
+Icy Conjurer L
+M: [1096]
+D: [129]
+P: [1487]
+F: [279.09090909090907]
+
+Innate Axiom B
+D: [129, 160]
+C: [3.0]

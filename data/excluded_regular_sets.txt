@@ -1,0 +1,178 @@
+Reason: Not Damage Enhancing
+Amber Plasm L
+Armor of the Seducer B
+Armor of the Trainee B
+Bahraha's Curse B
+Bloodthorn's Touch L
+Buffer of the Swift L
+Chimera's Rebuke B
+Combat Physician L
+Curse Eater L
+Daedric Trickery B
+Dauntless Combatant B
+Dead-Water's Guile M
+Daring Corsair B
+Deadlands Demolisher B
+Desert Rose L
+Draugr's Rest L
+Dreamer's Mantle L
+Druid's Braid B
+Eye of the Grasp L
+Eye of Nahviintaas L
+Eyes of Mara B
+False God's Devotion L
+Fiord's Legacy M
+Gossamer L
+Grave-Stake Collector B
+Hanu's Compassion L
+Healer's Habit L
+Healing Mage L
+Hexos' Ward M
+Hide of the Werewolf M
+Hiti's Hearth L
+Hollowfang Thirst L
+Hunt Leader M
+Imperial Physique B
+Impregnable Armor B
+Indomitable Fury L
+Kagrenac's Hope B
+Kraglen's Howl M
+Kyne's Kiss M
+Lamia's Song L
+Langour of Peryite L
+Leki's Focus M
+Light Speaker L
+Light of Cyrodiil L
+Magicka Furnace L
+Magnus' Gift B
+Marauder's Haste L
+Marksman's Crest M
+Meritorious Service L
+Naga Shaman B
+Night's Silence B
+Nocturnal's Ploy M
+Oblivion's Edge M
+Perfected Eye of Nahviintaas L
+Perfected False God's Devotion L
+Perfected Pillager's Profit L
+Phoenix L
+Pillager's Profit L
+Prayer Shawl L
+Rallying Cry L
+Ranger's Gait M
+Redistributor B
+Robes of Alteration Mastery L
+Robes of Transmutation L
+Robes of the Hist L
+Robes of the Withered Hand L
+Sanctuary L
+Serpent's Disdain B
+Shadow Dancer's Raiment L
+Shadow Walker M
+Shroud of the Lich L
+Sithis' Touch B
+Skooma Smuggler L
+Soldier of Anguish M
+Spectre's Eye B
+Spell Parasite B
+Spelunker M
+Stendarr's Embrace L
+Stone's Accord L
+Stuhn's Favor B
+Syrabane's Grip L
+The Arch-Mage L
+The Worm's Raiment L
+Trinimac's Valor L
+Twice-Born Star B
+Twilight Remedy L
+Twilight's Embrace B
+Unchained Aggressor B
+Vampire Lord L
+Vampire's Kiss B
+Vastarie's Tutelage B
+Vestments of the Warlock L
+Vicious Death L
+Vicious Serpent M
+Ward of Cyrodiil M
+Way of the Arena B
+Wilderqueen's Arch M
+Winter's Respite L
+Wisdom of Vanus L
+Witchman Armor M
+Wizard's Riposte L
+Wretched Vitality B
+Ancient Dragonguard B
+Night Mother's Embrace M
+Plague Slinger M
+Quick Serpent M
+
+Reason: MISC
+Gryphon's Ferocity M
+Powerful Assault M
+Senche's Bite M
+Toothrow M
+Treasure Hunter L
+Hex Siphon L
+Twin Sisters M
+Blessing of High Isle L
+Frostbite L
+Heem-Jas' Retribution M
+
+Reason: Alchemical Poison
+Assassin's Guile B
+Legacy of Karth B
+Moon Hunter L
+Widowmaker M
+
+Reason: Pet
+Unleashed Ritualist L
+
+Reason: Blink, Charge, Leap, Teleport, or Pull ability
+Unleashed Terror M
+Rush of Agony M
+Crusader M
+
+Reason: Not Fit for Nightblade
+Ysgramor's Birthright L
+Winterborn L
+
+Reason: Not Fit for Magicka
+Viper's Sting M
+Way of Martial Knowledge L
+Witch-Knight's Defiance M
+The Morag Tong M
+Sword-Singer M
+Sword Dancer M
+Swamp Raider M
+Strength of the Automaton M
+Spriggan's Vigor M
+Scavenging Demise M
+Poisonous Serpent M
+Pestilent Host M
+Dragon's Appetite B
+Coral Riptide M
+Perfected Coral Riptide M
+Blood Moon M
+Blooddrinker M
+Aegis Caller M
+Ashen Grip B
+Hawk's Eye M
+
+Reason: Heavy Attack based
+Deadlands Assassin M
+Destructive Mage L
+Hew and Sunder M
+Infallible Mage L
+
+Reason: Grants Empower
+Queen's Elegance L
+Rage of the Ursauk M
+Might of the Lost Legion B
+
+Reason: Not Good Enough
+Azureblight Reaper M
+Clever Alchemist B
+Dagon's Dominion M
+Deadly Strike M
+Diamond's Victory B
+Dro'Zakar's Claws M

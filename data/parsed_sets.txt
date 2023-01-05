@@ -1,0 +1,456 @@
+Balorgh &
+D: [129]
+
+Domihaus &
+M: [1096]
+
+Ilambris &
+M: [1096]
+
+Kjalnar's Nightmare &
+D: [129]
+
+Lady Malygda &
+P: [1487]
+
+Molag Kena &
+D: [129]
+
+Slimecraw &
+C: [3.5205479452054793]
+
+Zaan &
+C: [3.0]
+
+Archer's Mind M
+C: [3.0, 3.0]
+
+Arms of Relequen M
+C: [3.0, 3.0]
+S: [0.05]
+
+Auroran's Thunder L
+D: [129]
+P: [1487]
+
+Back-Alley Gourmand L
+C: [3.0, 3.0]
+D: [129]
+
+Bahsei's Mania L
+D: [129]
+S: [0.05]
+C: [3.0]
+
+Briarheart M
+C: [3.0, 3.0]
+
+Bright-Throat's Boast L
+M: [1096, 1096]
+
+Burning Spellweave L
+M: [1096]
+D: [129]
+C: [3.0]
+
+Caluurion's Legacy L
+C: [3.0, 3.0]
+D: [129]
+
+Claw of the Forest Wraith B
+C: [3.0, 3.0]
+D: [129]
+
+Coldharbour's Favorite B
+M: [1096]
+D: [129]
+
+Crafty Alfiq L
+M: [1096, 1096, 1096, 2550]
+
+Dark Convergence L
+M: [1096]
+P: [1487]
+D: [129]
+
+Defiler M
+D: [129]
+C: [3.0, 3.0]
+
+Dragonguard Elite M
+C: [3.0]
+D: [129]
+
+Draugrkin's Grip L
+M: [1096]
+P: [1487]
+
+Elemental Catalyst L
+M: [1096, 1096]
+C: [3.0]
+
+Elemental Succession L
+M: [1096, 1096]
+D: [129]
+
+Essence Thief M
+D: [129]
+
+Flame Blossom L
+M: [1096]
+D: [129]
+P: [1487]
+
+Flanking Strategist M
+C: [3.0]
+D: [129]
+
+Galerion's Revenge B
+C: [3.0]
+D: [129]
+
+Grave Inevitability L
+C: [3.0, 3.0]
+D: [129]
+
+Grisly Gourmet M
+D: [129]
+P: [1487]
+
+Gryphon's Reprisal M
+C: [3.0, 3.0]
+P: [1487]
+
+Heartland Conqueror B
+D: [129]
+M: [1096]
+
+Hunding's Rage B
+C: [3.0, 3.0]
+D: [300]
+
+Icy Conjurer L
+M: [1096]
+D: [129]
+P: [1487]
+
+Innate Axiom B
+D: [129]
+C: [3.0]
+
+Kinras's Wrath M
+D: [129, 129]
+C: [3.0]
+
+Knight Slayer L
+M: [1096]
+D: [129]
+
+Kvatch Gladiator B
+C: [3.0, 3.0]
+D: [129]
+
+Law of Julianos B
+C: [3.0, 3.0]
+M: [1096]
+D: [300]
+
+Leviathan M
+C: [3.0, 3.0, 6.9771689497716896]
+
+Mad Tinkerer L
+C: [3.0, 3.0]
+D: [129]
+
+Maligalig's Maelstrom L
+M: [1096]
+D: [129]
+
+Mantle of Siroria L
+D: [129, 129]
+S: [0.05]
+
+Master Architect L
+M: [1096]
+S: [0.05]
+D: [129]
+
+Mechanical Acuity B
+M: [1096]
+D: [129]
+
+Moondancer L
+M: [1096]
+S: [0.05]
+D: [129]
+
+Morkuldin B
+D: [129]
+
+Mother's Sorrow L
+M: [1096]
+C: [3.0, 3.0, 6.9771689497716896]
+
+Necropotence L
+M: [1096, 1096, 1096]
+
+Netch's Touch L
+C: [3.0]
+M: [1096]
+D: [129]
+
+New Moon Acolyte B
+C: [3.0]
+D: [129]
+P: [1487]
+
+Night Mother's Gaze B
+C: [3.0, 3.0]
+D: [129]
+
+Noble Duelist's Silks L
+D: [129, 129]
+
+Oblivion's Foe B
+D: [129]
+P: [1487]
+C: [3.0]
+
+Order's Wrath B
+C: [3.0, 3.0]
+D: [129]
+
+Overwhelming Surge L
+M: [1096]
+D: [129, 129]
+
+Pelinal's Wrath B
+D: [129, 129]
+P: [1487]
+
+Perfected Arms of Relequen M
+C: [3.0, 3.0]
+S: [0.05]
+
+Perfected Bahsei's Mania L
+D: [129]
+S: [0.05]
+C: [3.0]
+
+Perfected Mantle of Siroria L
+D: [129, 129]
+S: [0.05]
+
+Perfected Roaring Opportunist L
+P: [1487]
+S: [0.05]
+D: [129]
+
+Perfected Sul-Xan's Torment M
+D: [129]
+S: [0.05]
+C: [3.0]
+
+Perfected Tooth of Lokkestiiz M
+D: [129, 129]
+S: [0.05]
+
+Perfected Whorl of the Depths L
+D: [129, 129]
+S: [0.05]
+
+Perfected Yandir's Might M
+D: [129, 129]
+S: [0.05]
+
+Phylactery's Grasp M
+D: [129]
+C: [3.0, 3.0]
+
+Pillar of Nirn M
+C: [3.0]
+D: [129]
+
+Plaguebreak M
+P: [1487]
+D: [129, 129]
+
+Red Eagle's Fury B
+D: [129, 129]
+C: [3.0]
+
+Roar of Alkosh M
+C: [3.0]
+S: [0.05]
+D: [129]
+
+Roaring Opportunist L
+P: [1487]
+S: [0.05]
+D: [129]
+
+Robes of Destruction Mastery L
+M: [1096]
+C: [3.0]
+D: [129]
+
+Savage Werewolf M
+D: [129]
+
+Scathing Mage L
+M: [1096]
+C: [3.0, 3.0]
+
+Scorion's Feast L
+M: [1096]
+D: [129]
+
+Sentry M
+D: [129]
+C: [3.0]
+
+Shacklebreaker B
+D: [129]
+M: [2065]
+
+Shadow of the Red Mountain M
+D: [129]
+C: [3.0]
+
+Sheer Venom M
+D: [129, 129]
+
+Shield Breaker M
+D: [129]
+
+Silks of the Sun L
+C: [3.0]
+M: [1096]
+D: [129]
+
+Sload's Semblance B
+M: [1096]
+D: [129]
+
+Spell Power Cure L
+M: [1096, 1096]
+D: [129]
+
+Spell Strategist L
+M: [1096]
+D: [129, 129]
+
+Spider Cultist Cowl L
+C: [3.0]
+M: [1096]
+D: [129]
+
+Spinner's Garments L
+M: [1096, 1096]
+D: [129]
+P: [3460]
+
+Spriggan's Thorns M
+D: [129]
+P: [3460]
+
+Storm Master M
+C: [3.0, 3.0]
+D: [129]
+
+Storm-Cursed's Revenge L
+M: [1096]
+D: [129]
+P: [1487]
+
+Stygian M
+D: [129, 129]
+P: [1487]
+
+Sul-Xan's Torment M
+D: [129]
+S: [0.05]
+C: [3.0]
+
+Sunderflame M
+D: [129]
+C: [3.0]
+
+Talfyg's Treachery L
+C: [3.0]
+M: [1096]
+D: [129]
+
+Thunder Caller L
+P: [1487]
+D: [129, 129]
+
+Titanborn Strength M
+P: [1487]
+D: [129]
+
+Tooth of Lokkestiiz M
+D: [129, 129]
+S: [0.05]
+
+True-Sworn Fury L
+C: [3.0]
+D: [129]
+M: [1096]
+
+Twice-Fanged Serpent M
+D: [129]
+C: [3.0]
+
+Tzogvin's Warband M
+C: [3.0, 3.0]
+P: [1487]
+
+Undaunted Infiltrator M
+C: [3.0]
+
+Undaunted Unweaver L
+M: [1096, 1096]
+C: [3.0]
+
+Unfathomable Darkness M
+C: [3.0]
+P: [1487]
+D: [129]
+
+Venomous Smite M
+C: [3.0, 3.0]
+D: [129]
+
+Vicecanon of Venom B
+D: [129]
+
+Voidcaller L
+M: [1096]
+D: [129]
+
+War Machine M
+S: [0.05]
+D: [129]
+
+War Maiden L
+C: [3.0]
+M: [1096]
+D: [129]
+
+Whorl of the Depths L
+D: [129, 129]
+S: [0.05]
+
+Wise Mage L
+C: [3.0, 3.0]
+D: [129]
+
+Yandir's Might M
+D: [129, 129]
+S: [0.05]
+
+Z'en's Redress L
+D: [129]
+M: [1096]
+
