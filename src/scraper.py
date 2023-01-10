@@ -16,17 +16,17 @@ def scrape(url):
     wasUnknown = False
     visited_sites = None
 
-    if os.path.exists('../data/visited_sites.txt'):
+    if os.path.exists('/home/sane7222/eso/data/visited_sites.txt'):
         # Open the file in read-only mode
-        with open('../data/visited_sites.txt', 'r') as file:
+        with open('/home/sane7222/eso/data/visited_sites.txt', 'r') as file:
             # Read the contents of the file
             visited_sites = set(file.read().split('\n'))
     else:
         # Create file
-        with open('../data/visited_sites.txt', 'w') as file:
+        with open('/home/sane7222/eso/data/visited_sites.txt', 'w') as file:
             visited_sites = set()
 
-    with open('../data/visited_sites.txt', 'a') as file:
+    with open('/home/sane7222/eso/data/visited_sites.txt', 'a') as file:
         # Exclude the text from the elements with the style 'padding-right: 0; vertical-align: middle'
         for td in tds[:]:
             if wasUnknown: # Previous was Unknown so we remove its description
@@ -95,12 +95,12 @@ def scrape(url):
                 strong.string = '\r\n' + strong.string
 
     # Open the other file for reading
-    with open('../data/sets.txt', 'r') as other_file:
+    with open('/home/sane7222/eso/data/sets.txt', 'r') as other_file:
         # Read the contents of the other file into a set
         other_file_set = set(other_file.read().split('\n'))
 
     # Open the sets.txt file for writing
-    with open('../data/sets.txt', 'a') as f:
+    with open('/home/sane7222/eso/data/sets.txt', 'a') as f:
         # Write the text of each element to the file, if it is not in the other file
         t = False
         for td in tds:

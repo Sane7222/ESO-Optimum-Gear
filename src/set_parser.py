@@ -3,7 +3,7 @@ from itertools import combinations
 import builtins
 
 # Open the file in read mode
-with open("../data/sets.txt", "r") as f:
+with open("/home/sane7222/eso/data/sets.txt", "r") as f:
     # Read the contents of the file
     data = f.read()
 
@@ -69,7 +69,7 @@ for set in monster_sets:
             number = re.findall(r'(\d+)', item)[0]
             set.add_general('P', int(number))
 
-with open('../data/excluded_monster_sets.txt', 'r') as other_file:
+with open('/home/sane7222/eso/data/excluded_monster_sets.txt', 'r') as other_file:
     other_file_set = builtins.set(other_file.read().split('\n'))
 
 filtered_sets = []
@@ -98,7 +98,7 @@ for set in other_sets:
             number = re.findall(r'(\d+)', item)[0]
             set.add_general('P', int(number))
 
-with open('../data/excluded_regular_sets.txt', 'r') as other_file:
+with open('/home/sane7222/eso/data/excluded_regular_sets.txt', 'r') as other_file:
     other_file_set = builtins.set(other_file.read().split('\n'))
 
 filtered_sets = []
@@ -110,11 +110,11 @@ other_sets = filtered_sets
 
 set_combos = list(combinations(other_sets, 2))
 
-with open('../data/parsed_sets.txt', 'r') as other_file:
+with open('/home/sane7222/eso/data/parsed_sets.txt', 'r') as other_file:
     other_file_set = builtins.set(other_file.read().split('\n'))
 
 # Open the file in write mode
-with open("../data/parsed_sets.txt", "a") as f:
+with open("/home/sane7222/eso/data/parsed_sets.txt", "a") as f:
 
     for set in monster_sets:
         if set.name not in other_file_set:
