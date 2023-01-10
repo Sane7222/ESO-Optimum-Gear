@@ -117,6 +117,28 @@ Twin Sisters M
 Blessing of High Isle L
 Frostbite L
 Heem-Jas' Retribution M
+Maligalig's Maelstrom L
+Moondancer L
+Netch's Touch L
+Night Mother's Gaze B
+Noble Duelist's Silks L
+Oblivion's Foe B
+Pelinal's Wrath B
+Perfected Arms of Relequen M
+Bahsei's Mania L
+Mantle of Siroria L
+Perfected Sul-Xan's Torment M
+Sul-Xan's Torment M
+Perfected Tooth of Lokkestiiz M
+Tooth of Lokkestiiz M
+Roar of Alkosh M
+Spell Power Cure L
+Storm-Cursed's Revenge L
+Stygian M
+Undaunted Infiltrator M
+Voidcaller L
+Whorl of the Depths L
+Yandir's Might M
 
 Reason: Alchemical Poison
 Assassin's Guile B
@@ -126,6 +148,7 @@ Widowmaker M
 
 Reason: Pet
 Unleashed Ritualist L
+Necropotence L
 
 Reason: Blink, Charge, Leap, Teleport, or Pull ability
 Unleashed Terror M
@@ -157,12 +180,21 @@ Blooddrinker M
 Aegis Caller M
 Ashen Grip B
 Hawk's Eye M
+Undaunted Unweaver L
 
 Reason: Heavy Attack based
 Deadlands Assassin M
 Destructive Mage L
 Hew and Sunder M
 Infallible Mage L
+Knight Slayer L
+Perfected Roaring Opportunist L
+Roaring Opportunist L
+Scorion's Feast L
+Storm Master M
+Sunderflame M
+Thunder Caller L
+Wise Mage L
 
 Reason: Grants Empower
 Queen's Elegance L
@@ -176,3 +208,4 @@ Dagon's Dominion M
 Deadly Strike M
 Diamond's Victory B
 Dro'Zakar's Claws M
+Red Eagle's Fury B

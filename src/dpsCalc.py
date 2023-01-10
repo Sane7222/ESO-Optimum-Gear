@@ -6,10 +6,9 @@ import builtins
 DUMMY_HEALTH = 2002944
 SKILL_COEFF_MAX_MAGICKA = 0.1
 SKILL_COEFF_SPELL_DAMAGE = 1.05
-ENEMY_RESISTANCE = 18200
+ENEMY_RESISTANCE = 18200 # 18200 max enemy resistance | Dummy resistance is 1170
 
 # User defined for High Elf
-PLAYER_FLAT_DAMAGE_AMP = 0
 PLAYER_SUM_PERC_DAMAGE_AMP = 0.0 # Minor Berserk for a player dealing 5% more damage
 TARGET_SUM_PERC_DAMAGE_TAKEN = 0.0 # Minor Vulnerability for a target taking 5% more damage
 SUM_TARGET_DEBUFFS = 0 # Minor Breach for target resistance decreased by 2974
@@ -58,6 +57,7 @@ CRITICAL_DAMAGE = BASE_SPELL_CRITICAL_DAMAGE + ASSASSIN_CRITICAL_DAMAGE_PASSIVE 
 # User Settings
 TIME_COMPLEXITY_INFORMATION = True
 NUMBER_OF_CHAMPION_POINTS = 2
+SOLO = True
 
 # Define the Set class
 class Set:
@@ -72,12 +72,12 @@ class Set:
             self.general[key] = [value]
 
 def setCollector():
-    with open("../data/parsed_sets.txt", "r") as f: # Read the contents of the file
+    with open("/home/sane7222/eso/data/final_sets.txt", "r") as f:
         data = f.read()
 
     lines = data.strip().split("\n") # Split the data into individual lines
 
-    monster_sets = [] # Initialize empty lists to store the sets
+    monster_sets = []
     other_sets = []
 
     current_set = None # Initialize a variable to store the current set
@@ -89,7 +89,7 @@ def setCollector():
         elif not parsing_general:
             current_set = Set(line) # If we are not parsing general information and the line is not empty, create a new Set object with the line as its name
 
-            if current_set.name.endswith("&"): # If the name of the set ends with an ampersand, add it to the monster_sets list
+            if current_set.name.endswith("&"): # If the name of the set ends with an ampersand (&), add it to the monster_sets list
                 monster_sets.append(current_set)
             else: # Otherwise, add it to the other_sets list
                 other_sets.append(current_set)
@@ -99,18 +99,22 @@ def setCollector():
             numbers = re.findall(r"\[([\d., ]+)\]", value) # Use a regular expression to match the pattern "[number]" or "[number, number]" and extract the numbers
             numbers = [int(x) if '.' not in x else float(x) for x in numbers[0].split(", ")] # Split the numbers on the comma and convert them to integers or floats
 
-            for x in numbers: # Convert them to integer or float and add them to the current set
+            for x in numbers:
                 current_set.add_general(key, x)
 
-        parsing_general = line.endswith(tuple("]&BLM")) # Set parsing_general to True if the line ends with a colon
+        parsing_general = line.endswith(tuple("]&BLM")) # Set parsing_general to True if the line ends with any of ], &, B, L, M
 
     return monster_sets, other_sets
 
 def combinationBuilder(other_sets):
-    mundus = {'M': [3309], 'D': [389], 'C': [9.894977168949772], 'CD': [17.0], 'P': [4489]} # Values with 7 pieces of Divines
-    champion = {'ARCANE M': [1300], 'UNTAMED D': [150], 'WRATHFUL D': [205], 'BACKSTAB CD': [10.0], 'FIGHT CD': [8.0], 'SINGLE S': [0.03], 'DIRECT S': [0.02]}
+    mundus = {'M': [3309], 'D': [389], 'C': [0.09894977168949772], 'CD': [0.17], 'P': [4489]} # Values with 7 pieces of Divines
+    champion = {'ARCANE M': [1300], 'UNTAMED D': [150], 'WRATHFUL D': [205], 'BACKSTAB CD': [0.1], 'FIGHT CD': [0.08], 'SINGLE S': [0.03], 'DIRECT S': [0.02]}
+    champion_solo = {'ARCANE M': [1300], 'UNTAMED D': [150], 'WRATHFUL D': [205], 'FIGHT CD': [0.08], 'SINGLE S': [0.03], 'DIRECT S': [0.02]}
     
-    combos = list(combinations(champion.items(), NUMBER_OF_CHAMPION_POINTS)) # Get all possible combinations of four items from the champion set
+    if SOLO:
+        combos = list(combinations(champion_solo.items(), NUMBER_OF_CHAMPION_POINTS)) # Get all possible combinations of items from the champion set
+    else:
+        combos = list(combinations(champion.items(), NUMBER_OF_CHAMPION_POINTS)) # Get all possible combinations of items from the champion set
 
     champion_combos = builtins.set() # Create a set with all the combinations
 
@@ -121,7 +125,7 @@ def combinationBuilder(other_sets):
 
     return mundus, champion_combos, set_combos
 
-def monster_armor_test(light_pieces, medium_pieces, magicka_test, spell_damage_test, penetration_test, spell_critical_chance_test, spell_critical_damage_test):
+def monster_armor_test(light_pieces, medium_pieces, magicka_test, spell_damage_test, penetration_test, spell_critical_chance_test, spell_critical_damage_test, flat_damage_test, sum_of_player_percent_damage_amp):
     magicka_from_undaunted_passive = UNDAUNTED_MAGICKA_PASSIVE
     if light_pieces > 0 and medium_pieces > 0:
         magicka_from_undaunted_passive += 0.02
@@ -147,9 +151,28 @@ def monster_armor_test(light_pieces, medium_pieces, magicka_test, spell_damage_t
 
     armor_mitigation = 1 - ((((ENEMY_RESISTANCE - SUM_TARGET_DEBUFFS) * (1 - PLAYER_PERC_PEN) - player_flat_penetration) / 50000))
 
-    average_damage_done = (SKILL_COEFF_MAX_MAGICKA * maximum_magicka + SKILL_COEFF_SPELL_DAMAGE * spell_damage + PLAYER_FLAT_DAMAGE_AMP) * (1 + spell_critical_chance * spell_critical_damage) * (1 + sum_of_player_percent_damage_amp) * (armor_mitigation) * (1 + TARGET_SUM_PERC_DAMAGE_TAKEN)
+    average_damage_done = (SKILL_COEFF_MAX_MAGICKA * maximum_magicka + SKILL_COEFF_SPELL_DAMAGE * spell_damage + flat_damage_test) * (1 + spell_critical_chance * spell_critical_damage) * (1 + sum_of_player_percent_damage_amp) * (armor_mitigation) * (1 + TARGET_SUM_PERC_DAMAGE_TAKEN)
     
     return average_damage_done
+
+def update_best(average_damage_done, set1, set2, Mset, key, combo, light, medium):
+    global highest_damage
+    global setA
+    global setB
+    global MonsterSet
+    global Mundus
+    global ChampionCombo
+    global LightPieces
+    global MediumPieces
+
+    highest_damage = average_damage_done
+    setA = set1
+    setB = set2
+    MonsterSet = Mset
+    Mundus = key
+    ChampionCombo = combo
+    LightPieces = light
+    MediumPieces = medium
 
 if __name__ == '__main__':
 
@@ -166,7 +189,6 @@ if __name__ == '__main__':
     mundus, champion_combos, set_combos = combinationBuilder(other_sets)
 
     if TIME_COMPLEXITY_INFORMATION:
-        print('Number of:')
         print('Monster Sets = ' + str(len(monster_sets)))
         print('Mundus Stones = ' + str(len(mundus)))
         print('Champion Point Combinations = ' + str(len(champion_combos)))
@@ -175,7 +197,7 @@ if __name__ == '__main__':
     for combo in champion_combos:
 
         magicka_champion = 0
-        spell_damage_champion = 0
+        spell_damage_champion = 0.0
         spell_crit_damage_champion = 0.0
         percent_damage_amp_champion = 0.0
 
@@ -187,13 +209,13 @@ if __name__ == '__main__':
             elif ck == 'SINGLE S' or ck == 'DIRECT S':
                 percent_damage_amp_champion += cv
             elif ck == 'BACKSTAB CD' or ck == 'FIGHT CD':
-                spell_crit_damage_champion += (cv/100)
+                spell_crit_damage_champion += cv
 
         mund = mundus.items()
         for key, value in mund:
 
             magicka_mundus = 0
-            spell_damage_mundus = 0
+            spell_damage_mundus = 0.0
             penetration_mundus = 0
             spell_crit_chance_mundus = 0.0
             spell_crit_damage_mundus = 0.0
@@ -205,9 +227,9 @@ if __name__ == '__main__':
             elif key == 'P':
                 penetration_mundus += value[0]
             elif key == 'C':
-                spell_crit_chance_mundus += (value[0]/100)
+                spell_crit_chance_mundus += value[0]
             elif key == 'CD':
-                spell_crit_damage_mundus += (value[0]/100)
+                spell_crit_damage_mundus += value[0]
 
             for Mset in monster_sets:
 
@@ -215,35 +237,39 @@ if __name__ == '__main__':
                 monster_slayer_bonus = False
 
                 magicka_monster = 0
-                spell_damage_monster = 0
+                spell_damage_monster = 0.0
                 penetration_monster = 0
                 spell_crit_chance_monster = 0.0
                 spell_crit_damage_monster = 0.0
                 percent_damage_amp_monster = 0.0
+                flat_damage_monster = 0.0
+                damage_multiplier_monster = 0.0
 
                 m1 = Mset.general.items()
                 for k, v in m1:
                     if k == 'M':
-                        for m in v:
-                            magicka_monster += m
+                        magicka_monster += sum(v)
                     elif k == 'D':
-                        for m in v:
-                            spell_damage_monster += m
+                        spell_damage_monster += sum(v)
                     elif k == 'P':
-                        for m in v:
-                            penetration_monster += m
+                        penetration_monster += sum(v)
                     elif k == 'C':
-                        for m in v:
-                            spell_crit_chance_monster += (m/100)
+                        spell_crit_chance_monster += sum(v)
+                    elif k == 'CD':
+                        spell_crit_damage_monster += sum(v)
                     elif k == 'S' and slayer_bonus_from_sets == False:
                         slayer_bonus_from_sets = True
                         monster_slayer_bonus = True
                         percent_damage_amp_monster += 0.05
+                    elif k == 'F':
+                        flat_damage_monster += sum(v)
+                    elif k == 'DM':
+                        damage_multiplier_monster += sum(v)
 
                 for set_pair in set_combos:
                     set1, set2 = set_pair
 
-                    sum_of_player_percent_damage_amp = PLAYER_SUM_PERC_DAMAGE_AMP
+                    sum_of_player_percent_damage_amp = PLAYER_SUM_PERC_DAMAGE_AMP + damage_multiplier_monster
 
                     if monster_slayer_bonus:
                         slayer_bonus_from_sets = True
@@ -251,86 +277,100 @@ if __name__ == '__main__':
                         slayer_bonus_from_sets = False
 
                     magicka_sets = 0
-                    spell_damage_sets = 0
+                    spell_damage_sets = 0.0
                     penetration_sets = 0
                     spell_crit_chance_sets = 0.0
                     spell_crit_damage_sets = 0.0
+                    flat_damage_sets = 0.0
+                    damage_multiplier_sets = 0.0
 
                     s1 = set1.general.items()
-                    for k, v in s1:
-                        if k == 'M':
-                            for m in v:
-                                magicka_sets += m
-                        elif k == 'D':
-                            for m in v:
-                                spell_damage_sets += m
-                        elif k == 'P':
-                            for m in v:
-                                penetration_sets += m
-                        elif k == 'C':
-                            for m in v:
-                                spell_crit_chance_sets += (m/100)
-                        elif k == 'S' and slayer_bonus_from_sets == False:
-                            slayer_bonus_from_sets = True
-                            sum_of_player_percent_damage_amp += 0.05
-
                     s2 = set2.general.items()
-                    for k, v in s2:
-                        if k == 'M':
-                            for m in v:
-                                magicka_sets += m
-                        elif k == 'D':
-                            for m in v:
-                                spell_damage_sets += m
-                        elif k == 'P':
-                            for m in v:
-                                penetration_sets += m
-                        elif k == 'C':
-                            for m in v:
-                                spell_crit_chance_sets += (m/100)
-                        elif k == 'S' and slayer_bonus_from_sets == False:
-                            slayer_bonus_from_sets = True
-                            sum_of_player_percent_damage_amp += 0.05
+
+                    for d in (s1, s2):
+                        for k, v in d:
+                            if k == 'M':
+                                magicka_sets += sum(v)
+                            elif k == 'D':
+                                spell_damage_sets += sum(v)
+                            elif k == 'P':
+                                penetration_sets += sum(v)
+                            elif k == 'C':
+                                spell_crit_chance_sets += sum(v)
+                            elif k == 'CD':
+                                spell_crit_damage_sets += sum(v)
+                            elif k == 'S' and slayer_bonus_from_sets == False:
+                                slayer_bonus_from_sets = True
+                                sum_of_player_percent_damage_amp += 0.05
+                            elif k == 'F':
+                                flat_damage_sets += sum(v)
+                            elif k == 'DM':
+                                damage_multiplier_sets += sum(v)
 
                     sum_of_player_percent_damage_amp += percent_damage_amp_champion
                     sum_of_player_percent_damage_amp += percent_damage_amp_monster
+                    sum_of_player_percent_damage_amp += damage_multiplier_sets
 
                     magicka_test = MAGICKA + magicka_sets + magicka_monster + magicka_mundus + magicka_champion
                     spell_damage_test = SPELL_DAMAGE + spell_damage_sets + spell_damage_monster + spell_damage_mundus + spell_damage_champion
                     penetration_test = PENETRATION + penetration_sets + penetration_monster + penetration_mundus
                     spell_critical_chance_test = CRITICAL_CHANCE + spell_crit_chance_sets + spell_crit_chance_monster + spell_crit_chance_mundus
                     spell_critical_damage_test = CRITICAL_DAMAGE + spell_crit_damage_sets + spell_crit_damage_monster + spell_crit_damage_mundus + spell_crit_damage_champion
+                    flat_damage_test = flat_damage_sets + flat_damage_monster
 
-                    average_damage_done = monster_armor_test(2, 0, magicka_test, spell_damage_test, penetration_test, spell_critical_chance_test, spell_critical_damage_test)
-                    if average_damage_done >= highest_damage:
-                        highest_damage = average_damage_done
-                        setA = set1
-                        setB = set2
-                        MonsterSet = Mset
-                        Mundus = key
-                        ChampionCombo = combo
-                        LightPieces = 2
-                        MediumPieces = 0
-                    average_damage_done = monster_armor_test(1, 1, magicka_test, spell_damage_test, penetration_test, spell_critical_chance_test, spell_critical_damage_test)
-                    if average_damage_done >= highest_damage:
-                        highest_damage = average_damage_done
-                        setA = set1
-                        setB = set2
-                        MonsterSet = Mset
-                        Mundus = key
-                        ChampionCombo = combo
-                        LightPieces = 1
-                        MediumPieces = 1
-                    average_damage_done = monster_armor_test(0, 2, magicka_test, spell_damage_test, penetration_test, spell_critical_chance_test, spell_critical_damage_test)
-                    if average_damage_done >= highest_damage:
-                        highest_damage = average_damage_done
-                        setA = set1
-                        setB = set2
-                        MonsterSet = Mset
-                        Mundus = key
-                        ChampionCombo = combo
-                        LightPieces = 0
-                        MediumPieces = 2
+                    if SOLO:
+                        penetration_test -= ASSASSIN_PENETRATION_PASSIVE
+
+                    if set1.name.endswith('B') or set2.name.endswith('B') or (set1.name.endswith('L') and set2.name.endswith('M')) or (set1.name.endswith('M') and set2.name.endswith('L')):
+                        average_damage_done = monster_armor_test(2, 5, magicka_test, spell_damage_test, penetration_test, spell_critical_chance_test, spell_critical_damage_test, flat_damage_test, sum_of_player_percent_damage_amp)
+                        if average_damage_done >= highest_damage:
+                            update_best(average_damage_done, set1, set2, Mset, key, combo, 2, 5)
+
+                        average_damage_done = monster_armor_test(1, 6, magicka_test, spell_damage_test, penetration_test, spell_critical_chance_test, spell_critical_damage_test, flat_damage_test, sum_of_player_percent_damage_amp)
+                        if average_damage_done >= highest_damage:
+                            update_best(average_damage_done, set1, set2, Mset, key, combo, 1, 6)
+
+                        average_damage_done = monster_armor_test(0, 7, magicka_test, spell_damage_test, penetration_test, spell_critical_chance_test, spell_critical_damage_test, flat_damage_test, sum_of_player_percent_damage_amp)
+                        if average_damage_done >= highest_damage:
+                            update_best(average_damage_done, set1, set2, Mset, key, combo, 0, 7)
+
+                        average_damage_done = monster_armor_test(7, 0, magicka_test, spell_damage_test, penetration_test, spell_critical_chance_test, spell_critical_damage_test, flat_damage_test, sum_of_player_percent_damage_amp)
+                        if average_damage_done >= highest_damage:
+                            update_best(average_damage_done, set1, set2, Mset, key, combo, 7, 0)
+
+                        average_damage_done = monster_armor_test(6, 1, magicka_test, spell_damage_test, penetration_test, spell_critical_chance_test, spell_critical_damage_test, flat_damage_test, sum_of_player_percent_damage_amp)
+                        if average_damage_done >= highest_damage:
+                            update_best(average_damage_done, set1, set2, Mset, key, combo, 6, 1)
+
+                        average_damage_done = monster_armor_test(5, 2, magicka_test, spell_damage_test, penetration_test, spell_critical_chance_test, spell_critical_damage_test, flat_damage_test, sum_of_player_percent_damage_amp)
+                        if average_damage_done >= highest_damage:
+                            update_best(average_damage_done, set1, set2, Mset, key, combo, 5, 2)
+
+                    elif set1.name.endswith('L') and set2.name.endswith('L'):
+                        average_damage_done = monster_armor_test(7, 0, magicka_test, spell_damage_test, penetration_test, spell_critical_chance_test, spell_critical_damage_test, flat_damage_test, sum_of_player_percent_damage_amp)
+                        if average_damage_done >= highest_damage:
+                            update_best(average_damage_done, set1, set2, Mset, key, combo, 7, 0)
+
+                        average_damage_done = monster_armor_test(6, 1, magicka_test, spell_damage_test, penetration_test, spell_critical_chance_test, spell_critical_damage_test, flat_damage_test, sum_of_player_percent_damage_amp)
+                        if average_damage_done >= highest_damage:
+                            update_best(average_damage_done, set1, set2, Mset, key, combo, 6, 1)
+
+                        average_damage_done = monster_armor_test(5, 2, magicka_test, spell_damage_test, penetration_test, spell_critical_chance_test, spell_critical_damage_test, flat_damage_test, sum_of_player_percent_damage_amp)
+                        if average_damage_done >= highest_damage:
+                            update_best(average_damage_done, set1, set2, Mset, key, combo, 5, 2)
+
+                    elif set1.name.endswith('M') and set2.name.endswith('M'):
+                        average_damage_done = monster_armor_test(2, 5, magicka_test, spell_damage_test, penetration_test, spell_critical_chance_test, spell_critical_damage_test, flat_damage_test, sum_of_player_percent_damage_amp)
+                        if average_damage_done >= highest_damage:
+                            update_best(average_damage_done, set1, set2, Mset, key, combo, 2, 5)
+
+                        average_damage_done = monster_armor_test(1, 6, magicka_test, spell_damage_test, penetration_test, spell_critical_chance_test, spell_critical_damage_test, flat_damage_test, sum_of_player_percent_damage_amp)
+                        if average_damage_done >= highest_damage:
+                            update_best(average_damage_done, set1, set2, Mset, key, combo, 1, 6)
+
+                        average_damage_done = monster_armor_test(0, 7, magicka_test, spell_damage_test, penetration_test, spell_critical_chance_test, spell_critical_damage_test, flat_damage_test, sum_of_player_percent_damage_amp)
+                        if average_damage_done >= highest_damage:
+                            update_best(average_damage_done, set1, set2, Mset, key, combo, 0, 7)
 
     print(highest_damage)
     print(setA.name)

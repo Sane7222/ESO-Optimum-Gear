@@ -60,7 +60,7 @@ for set in monster_sets:
             set.add_general('M', int(number))
         elif item.startswith('Adds ') and item.endswith(' Critical Chance'): # C
             number = re.findall(r'(\d+)', item)[0]
-            number = int(number)/219
+            number = int(number)/21900
             set.add_general('C', number)
         elif item.startswith('Gain Minor Slayer at all times, increasing your damage done to Dungeon, Trial, and Arena Monsters by 5%.'): # S
             number = 0.05
@@ -89,7 +89,7 @@ for set in other_sets:
             set.add_general('M', int(number))
         elif item.startswith('Adds ') and item.endswith(' Critical Chance'): # C
             number = re.findall(r'(\d+)', item)[0]
-            number = int(number)/219
+            number = int(number)/21900
             set.add_general('C', number)
         elif item.startswith('Gain Minor Slayer at all times, increasing your damage done to Dungeon, Trial, and Arena Monsters by 5%.'): # S
             number = 0.05

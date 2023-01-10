@@ -7,9 +7,9 @@ def probabilityPerSecond(p, attacks_per_second):
     return total
 
 def averageDamagePerSecond(probability):
-    duration = 1  # The duration of the effect is 5 seconds
-    cooldown = 1  # The cooldown period is 10 seconds
-    damage_per_second = 400  # The average damage dealt per second is 259
+    duration = 7  # The duration of the effect
+    cooldown = 23  # The cooldown period
+    damage_per_second = 10  # The damage dealt per second
 
     dps = (probability * damage_per_second * duration) / cooldown
 
@@ -17,4 +17,21 @@ def averageDamagePerSecond(probability):
 
 
 if __name__ == '__main__':
-    averageDamagePerSecond(probabilityPerSecond(0.4, 1))
+    averageDamagePerSecond(probabilityPerSecond(1.0, 1))
+
+'''
+Example: 1000 damage over 10 seconds 20 second cooldown
+    duration = 10               | 1
+    cooldown = 20
+    damage_per_second = 100     | 1000
+
+Example: Dealing damage has a 10% chance to activate an ability that deals 100 damage per second for 5 seconds 10 second cooldown
+    duration = 5                | 1
+    cooldown = 10
+    damage_per_second = 100     | 500
+    
+    3 DoT + Light Attack + Spammable
+
+    attacks_per_second = 5
+    p = 0.1
+'''
