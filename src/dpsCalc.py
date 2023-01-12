@@ -1,6 +1,6 @@
 import re
+import time
 from itertools import combinations
-import builtins
 
 # Predefined
 SKILL_COEFF_MAX_MAGICKA = 0.1
@@ -135,7 +135,7 @@ def combinationBuilder(regular_sets):
     else:
         champion_sets = list(combinations(champion.items(), NUMBER_OF_CHAMPION_POINTS)) # Get all possible combinations of items from the champion set
 
-    champion_combinations = builtins.set() # Create a set with all the combinations
+    champion_combinations = set() # Create a set with all the combinations
 
     for champion_set in champion_sets:
         champion_combinations.add(tuple((key, value[0]) for key, value in champion_set))
@@ -148,7 +148,7 @@ def manage_list(average_damage_done, set_1, set_2, set_M, mundus_key, champion_s
     build = (average_damage_done, set_1, set_2, set_M, mundus_key, champion_set, light, medium)
     lst.append(build)
     lst.sort(key=lambda x: x[0], reverse=True)
-    
+
     seen = set()
     result = []
     for setup in lst:
@@ -157,7 +157,7 @@ def manage_list(average_damage_done, set_1, set_2, set_M, mundus_key, champion_s
             seen.add(comparator)
             result.append(setup)
         elif comparator in seen:
-            result = [x if x[0] > setup[0] else setup for x in result]
+            result = [x if x[1:4] != comparator or x[0] > setup[0] else setup for x in result]
 
     return result[:HIGHEST], result[len(result)-1][0]
 
@@ -193,6 +193,7 @@ def monster_armor_test(light_pieces, medium_pieces, magicka_test, spell_damage_t
 
 
 if __name__ == '__main__':
+    t1 = time.time()
 
     lst = []
     lowest_acceptable_damage = 0.0
@@ -204,8 +205,7 @@ if __name__ == '__main__':
         print('Monster Sets = ' + str(len(monster_sets)))
         print('Mundus Stones = ' + str(len(mundus)))
         print('Champion Point Combinations = ' + str(len(champion_combinations)))
-        print('Regular Set Combinations = ' + str(len(regular_combinations)))
-        print()
+        print('Regular Set Combinations = ' + str(len(regular_combinations)) + '\n')
 
     mundus_iter = mundus.items()
 
@@ -227,10 +227,17 @@ if __name__ == '__main__':
 
                 m1 = set_M.general.items()
 
-                monster_dict = {'M': 0.0, 'D': 0.0, 'P': 0.0, 'C': 0.0, 'CD': 0.0, 'F': 0.0, 'DM': 0.0}
+                active_buffs_debuffs = set()
+
+                monster_key_dict = {'m_BERSERK': 'DM', 'm_SLAYER': 'DM'}
+                monster_value_dict = {'M': 0.0, 'D': 0.0, 'P': 0.0, 'C': 0.0, 'CD': 0.0, 'F': 0.0, 'DM': 0.0}
 
                 for k, v in m1:
-                    monster_dict[k] += sum(v)
+                    if k in monster_value_dict:
+                        monster_value_dict[k] += sum(v)
+                    elif k in monster_key_dict and k not in active_buffs_debuffs:
+                        monster_value_dict[monster_key_dict[k]] += v[0]
+                        active_buffs_debuffs.add(k)
 
                 for set_pair in regular_combinations:
                     set_1, set_2 = set_pair
@@ -238,80 +245,53 @@ if __name__ == '__main__':
                     s1 = set_1.general.items()
                     s2 = set_2.general.items()
 
-                    active_buffs_debuffs = set()
+                    current_buffs_debuffs = active_buffs_debuffs.copy()
 
-                    sets_key_dict = {'S': 'DM'}
+                    sets_key_dict = {'m_BERSERK': 'DM', 'm_SLAYER': 'DM'}
                     sets_value_dict = {'M': 0.0, 'D': 0.0, 'P': 0.0, 'C': 0.0, 'CD': 0.0, 'F': 0.0, 'DM': 0.0}
 
                     for d in (s1, s2):
                         for k, v in d:
                             if k in sets_value_dict:
                                 sets_value_dict[k] += sum(v)
-                            elif k in sets_key_dict and k not in active_buffs_debuffs:
+                            elif k in sets_key_dict and k not in current_buffs_debuffs:
                                 sets_value_dict[sets_key_dict[k]] += v[0]
-                                active_buffs_debuffs.add(k)
+                                current_buffs_debuffs.add(k)
 
-                    magicka_test = MAGICKA + sets_value_dict['M'] + monster_dict['M'] + mundus_dict['M'] + champion_value_dict['M']
-                    spell_damage_test = SPELL_DAMAGE + sets_value_dict['D'] + monster_dict['D'] + mundus_dict['D'] + champion_value_dict['D']
-                    penetration_test = PENETRATION + sets_value_dict['P'] + monster_dict['P'] + mundus_dict['P']
-                    spell_critical_chance_test = CRITICAL_CHANCE + sets_value_dict['C'] + monster_dict['C'] + mundus_dict['C']
-                    spell_critical_damage_test = CRITICAL_DAMAGE + sets_value_dict['CD'] + monster_dict['CD'] + mundus_dict['CD'] + champion_value_dict['CD']
-                    flat_damage_test = sets_value_dict['F'] + monster_dict['F']
-                    player_damage_amp_test = sets_value_dict['DM'] + monster_dict['DM'] + champion_value_dict['DM']
+                    magicka_test = MAGICKA + sets_value_dict['M'] + monster_value_dict['M'] + mundus_dict['M'] + champion_value_dict['M']
+                    spell_damage_test = SPELL_DAMAGE + sets_value_dict['D'] + monster_value_dict['D'] + mundus_dict['D'] + champion_value_dict['D']
+                    penetration_test = PENETRATION + sets_value_dict['P'] + monster_value_dict['P'] + mundus_dict['P']
+                    spell_critical_chance_test = CRITICAL_CHANCE + sets_value_dict['C'] + monster_value_dict['C'] + mundus_dict['C']
+                    spell_critical_damage_test = CRITICAL_DAMAGE + sets_value_dict['CD'] + monster_value_dict['CD'] + mundus_dict['CD'] + champion_value_dict['CD']
+                    flat_damage_test = sets_value_dict['F'] + monster_value_dict['F']
+                    player_damage_amp_test = sets_value_dict['DM'] + monster_value_dict['DM'] + champion_value_dict['DM']
 
                     if SOLO:
                         penetration_test -= ASSASSIN_PENETRATION_PASSIVE
 
                     if set_1.name.endswith('B') or set_2.name.endswith('B') or (set_1.name.endswith('L') and set_2.name.endswith('M')) or (set_1.name.endswith('M') and set_2.name.endswith('L')):
-                        average_damage_done = monster_armor_test(2, 5, magicka_test, spell_damage_test, penetration_test, spell_critical_chance_test, spell_critical_damage_test, flat_damage_test, player_damage_amp_test)
-                        if average_damage_done >= lowest_acceptable_damage:
-                            lst, lowest_acceptable_damage = manage_list(average_damage_done, set_1, set_2, set_M, mundus_key, champion_set, 2, 5, lst)
+                        
+                        average_damage_done_lst = [monster_armor_test(a, b, magicka_test, spell_damage_test, penetration_test, spell_critical_chance_test, spell_critical_damage_test, flat_damage_test, player_damage_amp_test) for a, b in [(2, 5), (1, 6), (0, 7), (7, 0), (6, 1), (5, 2)]]
 
-                        average_damage_done = monster_armor_test(1, 6, magicka_test, spell_damage_test, penetration_test, spell_critical_chance_test, spell_critical_damage_test, flat_damage_test, player_damage_amp_test)
-                        if average_damage_done >= lowest_acceptable_damage:
-                            lst, lowest_acceptable_damage = manage_list(average_damage_done, set_1, set_2, set_M, mundus_key, champion_set, 1, 6, lst)
-
-                        average_damage_done = monster_armor_test(0, 7, magicka_test, spell_damage_test, penetration_test, spell_critical_chance_test, spell_critical_damage_test, flat_damage_test, player_damage_amp_test)
-                        if average_damage_done >= lowest_acceptable_damage:
-                            lst, lowest_acceptable_damage = manage_list(average_damage_done, set_1, set_2, set_M, mundus_key, champion_set, 0, 7, lst)
-
-                        average_damage_done = monster_armor_test(7, 0, magicka_test, spell_damage_test, penetration_test, spell_critical_chance_test, spell_critical_damage_test, flat_damage_test, player_damage_amp_test)
-                        if average_damage_done >= lowest_acceptable_damage:
-                            lst, lowest_acceptable_damage = manage_list(average_damage_done, set_1, set_2, set_M, mundus_key, champion_set, 7, 0, lst)
-
-                        average_damage_done = monster_armor_test(6, 1, magicka_test, spell_damage_test, penetration_test, spell_critical_chance_test, spell_critical_damage_test, flat_damage_test, player_damage_amp_test)
-                        if average_damage_done >= lowest_acceptable_damage:
-                            lst, lowest_acceptable_damage = manage_list(average_damage_done, set_1, set_2, set_M, mundus_key, champion_set, 6, 1, lst)
-
-                        average_damage_done = monster_armor_test(5, 2, magicka_test, spell_damage_test, penetration_test, spell_critical_chance_test, spell_critical_damage_test, flat_damage_test, player_damage_amp_test)
-                        if average_damage_done >= lowest_acceptable_damage:
-                            lst, lowest_acceptable_damage = manage_list(average_damage_done, set_1, set_2, set_M, mundus_key, champion_set, 5, 2, lst)
+                        for damage, (a, b) in zip(average_damage_done_lst, [(2, 5), (1, 6), (0, 7), (7, 0), (6, 1), (5, 2)]):
+                            if damage >= lowest_acceptable_damage:
+                                lst, lowest_acceptable_damage = manage_list(damage, set_1, set_2, set_M, mundus_key, champion_set, a, b, lst)
 
                     elif set_1.name.endswith('L') and set_2.name.endswith('L'):
-                        average_damage_done = monster_armor_test(7, 0, magicka_test, spell_damage_test, penetration_test, spell_critical_chance_test, spell_critical_damage_test, flat_damage_test, player_damage_amp_test)
-                        if average_damage_done >= lowest_acceptable_damage:
-                            lst, lowest_acceptable_damage = manage_list(average_damage_done, set_1, set_2, set_M, mundus_key, champion_set, 7, 0, lst)
 
-                        average_damage_done = monster_armor_test(6, 1, magicka_test, spell_damage_test, penetration_test, spell_critical_chance_test, spell_critical_damage_test, flat_damage_test, player_damage_amp_test)
-                        if average_damage_done >= lowest_acceptable_damage:
-                            lst, lowest_acceptable_damage = manage_list(average_damage_done, set_1, set_2, set_M, mundus_key, champion_set, 6, 1, lst)
+                        average_damage_done_lst = [monster_armor_test(a, b, magicka_test, spell_damage_test, penetration_test, spell_critical_chance_test, spell_critical_damage_test, flat_damage_test, player_damage_amp_test) for a, b in [(7, 0), (6, 1), (5, 2)]]
 
-                        average_damage_done = monster_armor_test(5, 2, magicka_test, spell_damage_test, penetration_test, spell_critical_chance_test, spell_critical_damage_test, flat_damage_test, player_damage_amp_test)
-                        if average_damage_done >= lowest_acceptable_damage:
-                            lst, lowest_acceptable_damage = manage_list(average_damage_done, set_1, set_2, set_M, mundus_key, champion_set, 5, 2, lst)
+                        for damage, (a, b) in zip(average_damage_done_lst, [(7, 0), (6, 1), (5, 2)]):
+                            if damage >= lowest_acceptable_damage:
+                                lst, lowest_acceptable_damage = manage_list(damage, set_1, set_2, set_M, mundus_key, champion_set, a, b, lst)
 
                     elif set_1.name.endswith('M') and set_2.name.endswith('M'):
-                        average_damage_done = monster_armor_test(2, 5, magicka_test, spell_damage_test, penetration_test, spell_critical_chance_test, spell_critical_damage_test, flat_damage_test, player_damage_amp_test)
-                        if average_damage_done >= lowest_acceptable_damage:
-                            lst, lowest_acceptable_damage = manage_list(average_damage_done, set_1, set_2, set_M, mundus_key, champion_set, 2, 5, lst)
 
-                        average_damage_done = monster_armor_test(1, 6, magicka_test, spell_damage_test, penetration_test, spell_critical_chance_test, spell_critical_damage_test, flat_damage_test, player_damage_amp_test)
-                        if average_damage_done >= lowest_acceptable_damage:
-                            lst, lowest_acceptable_damage = manage_list(average_damage_done, set_1, set_2, set_M, mundus_key, champion_set, 1, 6, lst)
+                        average_damage_done_lst = [monster_armor_test(a, b, magicka_test, spell_damage_test, penetration_test, spell_critical_chance_test, spell_critical_damage_test, flat_damage_test, player_damage_amp_test) for a, b in [(2, 5), (1, 6), (0, 7)]]
 
-                        average_damage_done = monster_armor_test(0, 7, magicka_test, spell_damage_test, penetration_test, spell_critical_chance_test, spell_critical_damage_test, flat_damage_test, player_damage_amp_test)
-                        if average_damage_done >= lowest_acceptable_damage:
-                            lst, lowest_acceptable_damage = manage_list(average_damage_done, set_1, set_2, set_M, mundus_key, champion_set, 0, 7, lst)
+                        for damage, (a, b) in zip(average_damage_done_lst, [(2, 5), (1, 6), (0, 7)]):
+                            if damage >= lowest_acceptable_damage:
+                                lst, lowest_acceptable_damage = manage_list(damage, set_1, set_2, set_M, mundus_key, champion_set, a, b, lst)
 
     rank = 1
     for item in lst:
@@ -329,3 +309,6 @@ if __name__ == '__main__':
         print('Medium Armor Pieces: ' + str(item[7]))
         print()
         rank += 1
+
+    t2 = time.time()
+    print(t2-t1)

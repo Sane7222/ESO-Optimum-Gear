@@ -62,9 +62,9 @@ for set in monster_sets:
             number = re.findall(r'(\d+)', item)[0]
             number = int(number)/21900
             set.add_general('C', number)
-        elif item.startswith('Gain Minor Slayer at all times, increasing your damage done to Dungeon, Trial, and Arena Monsters by 5%.'): # S
+        elif item.startswith('Gain Minor Slayer at all times, increasing your damage done to Dungeon, Trial, and Arena Monsters by 5%.'): # m_SLAYER
             number = 0.05
-            set.add_general('S', number)
+            set.add_general('m_SLAYER', number)
         elif item.startswith('Adds ') and item.endswith(' Offensive Penetration'): # P
             number = re.findall(r'(\d+)', item)[0]
             set.add_general('P', int(number))
@@ -91,9 +91,9 @@ for set in other_sets:
             number = re.findall(r'(\d+)', item)[0]
             number = int(number)/21900
             set.add_general('C', number)
-        elif item.startswith('Gain Minor Slayer at all times, increasing your damage done to Dungeon, Trial, and Arena Monsters by 5%.'): # S
+        elif item.startswith('Gain Minor Slayer at all times, increasing your damage done to Dungeon, Trial, and Arena Monsters by 5%.'): # m_SLAYER
             number = 0.05
-            set.add_general('S', number)
+            set.add_general('m_SLAYER', number)
         elif item.startswith('Adds ') and item.endswith(' Offensive Penetration'): # P
             number = re.findall(r'(\d+)', item)[0]
             set.add_general('P', int(number))

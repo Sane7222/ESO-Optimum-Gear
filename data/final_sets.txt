@@ -24,7 +24,7 @@ D: [129, 560]
 
 Slimecraw &
 C: [0.035205479452054793]
-DM: [0.05]
+m_BERSERK: [0.05]
 
 Zaan &
 C: [0.03]
@@ -36,7 +36,7 @@ CD: [0.08]
 
 Arms of Relequen M
 C: [0.03, 0.03]
-S: [0.05]
+m_SLAYER: [0.05]
 F: [520.0]
 
 Auroran's Thunder L
@@ -184,7 +184,7 @@ F: [188.0]
 
 Master Architect L
 M: [1096]
-S: [0.05]
+m_SLAYER: [0.05]
 D: [129]
 DM: [0.030434782608695654]
 
@@ -218,24 +218,24 @@ F: [127.71428571428571]
 
 Perfected Bahsei's Mania L
 D: [129, 129]
-S: [0.05]
+m_SLAYER: [0.05]
 C: [0.03]
 DM: [0.06]
 
 Perfected Mantle of Siroria L
 D: [129, 129, 630]
-S: [0.05]
+m_SLAYER: [0.05]
 M: [1096]
 
 Perfected Whorl of the Depths L
 D: [129, 129]
-S: [0.05]
+m_SLAYER: [0.05]
 C: [0.03]
 F: [686.7777777777778]
 
 Perfected Yandir's Might M
 D: [129, 129, 343.0377474090598]
-S: [0.05]
+m_SLAYER: [0.05]
 p: [1487]
 
 Phylactery's Grasp M
@@ -356,7 +356,7 @@ D: [129]
 F: [86.17004031999998]
 
 War Machine M
-S: [0.05]
+m_SLAYER: [0.05]
 D: [129]
 DM: [0.030434782608695654]
 

@@ -27,7 +27,7 @@ C: [0.03, 0.03]
 
 Arms of Relequen M
 C: [0.03, 0.03]
-S: [0.05]
+m_SLAYER: [0.05]
 
 Auroran's Thunder L
 D: [129]
@@ -155,7 +155,7 @@ D: [129]
 
 Master Architect L
 M: [1096]
-S: [0.05]
+m_SLAYER: [0.05]
 D: [129]
 
 Mechanical Acuity B
@@ -184,20 +184,20 @@ D: [129, 129]
 
 Perfected Bahsei's Mania L
 D: [129]
-S: [0.05]
+m_SLAYER: [0.05]
 C: [0.03]
 
 Perfected Mantle of Siroria L
 D: [129, 129]
-S: [0.05]
+m_SLAYER: [0.05]
 
 Perfected Whorl of the Depths L
 D: [129, 129]
-S: [0.05]
+m_SLAYER: [0.05]
 
 Perfected Yandir's Might M
 D: [129, 129]
-S: [0.05]
+m_SLAYER: [0.05]
 
 Phylactery's Grasp M
 D: [129]
@@ -303,7 +303,7 @@ Vicecanon of Venom B
 D: [129]
 
 War Machine M
-S: [0.05]
+m_SLAYER: [0.05]
 D: [129]
 
 War Maiden L
