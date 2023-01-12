@@ -5,7 +5,7 @@ from itertools import combinations
 # Predefined
 SKILL_COEFF_MAX_MAGICKA = 0.1
 SKILL_COEFF_SPELL_DAMAGE = 1.05
-ENEMY_RESISTANCE = 18200 # 18200 max enemy resistance | Dummy resistance is 1170
+ENEMY_RESISTANCE = 470 # 18200 max enemy resistance | Dummy resistance is 470
 
 # User defined for High Elf
 PLAYER_SUM_PERC_DAMAGE_AMP = 0.0 # Minor Berserk for a player dealing 5% more damage
@@ -47,18 +47,18 @@ LIGHT_ARMOR_PASSIVE_PENETRATION_PER_PIECE = 939
 MAJOR_BERSERK = 0.1 # DM
 MAJOR_COURAGE = 430 # D
 MAJOR_FORCE = 0.2 # CD
-MAJOR_PROPHECY = 0.12 # C
+MAJOR_PROPHECY = 0.12 # C | Potion / Inner Light
 MAJOR_SLAYER = 0.1 # DM
-MAJOR_SORCERY = 0.2 # NULL
+MAJOR_SORCERY = 0.2 # SDM | Potion / Entropy
 MINOR_BERSERK = 0.05 # DM
 MINOR_COURAGE = 215 # D
-MINOR_FORCE = 0.1 # CD
+MINOR_FORCE = 0.1 # CD | Channeled Acceleraton / Barbed Trap
 MINOR_PROPHECY = 0.06 # C
 MINOR_SLAYER = 0.05 # DM
-MINOR_SORCERY = 0.1 # NULL
+MINOR_SORCERY = 0.1 # SDM
 
 # Debuffs
-MAJOR_BREACH = 5948 # P
+MAJOR_BREACH = 5948 # P | Elemental Drain / Tank
 MAJOR_BRITTLE = 0.2 # CD
 MAJOR_VULNERABILITY = 0.1 # DM
 MINOR_BREACH = 2974 # P
@@ -68,14 +68,16 @@ MINOR_VULNERABILITY = 0.05 # DM
 # Pre-computational values
 MAGICKA = BASE_MAGICKA + ATTR_MAGICKA + ARMOUR_MAGICKA_ENCHANTS + WITCH_MOTHER_MAGICKA + HIGH_ELF_MAGICKA_BONUS + CHAMPION_POINT_MAGICKA
 SPELL_DAMAGE = BASE_SPELL_DAMAGE + LEGENDARY_FLAME_STAFF_SPELL_DAMAGE + JEWELRY_SPELL_DAMAGE_ENCHANTS + HIGH_ELF_SPELL_DAMAGE_BONUS + FLAME_STAFF_DAMAGE_ENCHANT_WITH_INFUSED
-PENETRATION = ASSASSIN_PENETRATION_PASSIVE + CHAMPION_POINT_PENETRATION + MAJOR_BREACH
+PENETRATION = CHAMPION_POINT_PENETRATION + MAJOR_BREACH
 CRITICAL_CHANCE = BASE_SPELL_CRITICAL_CHANCE + CHAMPION_POINT_CRITICAL_CHANCE + LEGENDARY_FLAME_STAFF_CRITICAL_CHANCE + MAJOR_PROPHECY
 CRITICAL_DAMAGE = BASE_SPELL_CRITICAL_DAMAGE + ASSASSIN_CRITICAL_DAMAGE_PASSIVE + MINOR_FORCE
 
 # User Settings
-TIME_COMPLEXITY_INFORMATION = True
-NUMBER_OF_CHAMPION_POINTS = 2
-SOLO = True
+SOLO = False
+DUMMY = True
+
+COMBINATION_INFORMATION = True
+NUMBER_OF_CHAMPION_POINTS = 4
 HIGHEST = 10
 
 # Define the Set class
@@ -89,6 +91,12 @@ class Set:
             self.general[key].append(value)
         else:
             self.general[key] = [value]
+
+def user_settings():
+    if SOLO:
+        print('Solo Build')
+    elif DUMMY:
+        print('Dummy Parse')
 
 def setCollector():
     with open("/home/sane7222/eso/data/final_sets.txt", "r") as f:
@@ -161,14 +169,14 @@ def manage_list(average_damage_done, set_1, set_2, set_M, mundus_key, champion_s
 
     return result[:HIGHEST], result[len(result)-1][0]
 
-def monster_armor_test(light_pieces, medium_pieces, magicka_test, spell_damage_test, penetration_test, spell_critical_chance_test, spell_critical_damage_test, flat_damage_test, player_damage_amp_test):
+def monster_armor_test(light_pieces, medium_pieces, magicka_test, spell_damage_test, penetration_test, spell_critical_chance_test, spell_critical_damage_test, flat_damage_test, player_damage_amp_test, magicka_multiplier_test, spell_damage_multiplier_test):
     magicka_from_undaunted_passive = UNDAUNTED_MAGICKA_PASSIVE
     if light_pieces > 0 and medium_pieces > 0:
         magicka_from_undaunted_passive += 0.02
 
-    maximum_magicka = (magicka_test) * (1 + SIPHONING_MAGICKA_PASSIVE + magicka_from_undaunted_passive)
+    maximum_magicka = (magicka_test) * (1 + SIPHONING_MAGICKA_PASSIVE + magicka_from_undaunted_passive + magicka_multiplier_test)
 
-    spell_damage = (spell_damage_test) * (1 + MAJOR_SORCERY + (medium_pieces * MEDIUM_ARMOR_PASSIVE_SPELL_DAMAGE_PER_PIECE))
+    spell_damage = (spell_damage_test) * (1 + spell_damage_multiplier_test + (medium_pieces * MEDIUM_ARMOR_PASSIVE_SPELL_DAMAGE_PER_PIECE))
 
     player_flat_penetration = (penetration_test + (light_pieces * LIGHT_ARMOR_PASSIVE_PENETRATION_PER_PIECE))
 
@@ -191,18 +199,24 @@ def monster_armor_test(light_pieces, medium_pieces, magicka_test, spell_damage_t
     
     return average_damage_done
 
-
 if __name__ == '__main__':
     t1 = time.time()
 
     lst = []
     lowest_acceptable_damage = 0.0
 
+    buff_debuff_dict = { \
+        'M_BERSERK': 'DM', 'M_BREACH': 'P', 'M_BRITTLE': 'CD', 'M_COURAGE': 'D', 'M_FORCE': 'CD', 'M_PROPHECY': 'C', 'M_SLAYER': 'DM', 'M_SORCERY': 'SDM', 'M_VULNERABILITY': 'DM', \
+        'm_BERSERK': 'DM', 'm_BREACH': 'P', 'm_BRITTLE': 'CD', 'm_COURAGE': 'D', 'm_FORCE': 'CD', 'm_PROPHECY': 'C', 'm_SLAYER': 'DM', 'm_SORCERY': 'SDM', 'm_VULNERABILITY': 'DM', \
+        'Aggressive Warhorn': 'MM', 'Elemental Catalyst': 'CD'}
+
+    user_settings()
     monster_sets, regular_sets = setCollector()
     mundus, champion_combinations, regular_combinations = combinationBuilder(regular_sets)
 
-    if TIME_COMPLEXITY_INFORMATION:
+    if COMBINATION_INFORMATION:
         print('Monster Sets = ' + str(len(monster_sets)))
+        print('Regular Sets = ' + str(len(regular_sets)))
         print('Mundus Stones = ' + str(len(mundus)))
         print('Champion Point Combinations = ' + str(len(champion_combinations)))
         print('Regular Set Combinations = ' + str(len(regular_combinations)) + '\n')
@@ -220,23 +234,28 @@ if __name__ == '__main__':
         for mundus_key, mundus_value in mundus_iter:
 
             mundus_dict = {'M': 0.0, 'D': 0.0, 'P': 0.0, 'C': 0.0, 'CD': 0.0}
-
             mundus_dict[mundus_key] += mundus_value[0]
 
             for set_M in monster_sets:
 
                 m1 = set_M.general.items()
 
-                active_buffs_debuffs = set()
+                if SOLO:
+                    active_buffs_debuffs = {'M_PROPHECY', 'M_SORCERY', 'M_BREACH', 'm_FORCE'} # Loaded with predefined bonuses
+                    bonus_dict = {'CD': 0.0, 'MM': 0.0, 'SDM': 0.2}
+                elif DUMMY:
+                    active_buffs_debuffs = {'Aggressive Warhorn', 'Elemental Catalyst', 'M_FORCE', 'm_FORCE', 'M_COURAGE', 'm_COURAGE', 'M_SLAYER', \
+                        'M_PROPHECY', 'm_PROPHECY', 'M_SORCERY', 'm_SORCERY', 'm_BERSERK', 'M_BREACH', 'm_BREACH', 'M_VULNERABILITY', 'm_VULNERABILITY', \
+                        'M_SLAYER', 'm_BRITTLE'} # Loaded with predefined bonuses
+                    bonus_dict = {'CD': 0.15, 'MM': 0.1, 'SDM': 0.3}
 
-                monster_key_dict = {'m_BERSERK': 'DM', 'm_SLAYER': 'DM'}
-                monster_value_dict = {'M': 0.0, 'D': 0.0, 'P': 0.0, 'C': 0.0, 'CD': 0.0, 'F': 0.0, 'DM': 0.0}
+                monster_dict = {'M': 0.0, 'D': 0.0, 'P': 0.0, 'C': 0.0, 'CD': 0.0, 'F': 0.0, 'DM': 0.0}
 
                 for k, v in m1:
-                    if k in monster_value_dict:
-                        monster_value_dict[k] += sum(v)
-                    elif k in monster_key_dict and k not in active_buffs_debuffs:
-                        monster_value_dict[monster_key_dict[k]] += v[0]
+                    if k in monster_dict:
+                        monster_dict[k] += sum(v)
+                    elif k in buff_debuff_dict and k not in active_buffs_debuffs:
+                        monster_dict[buff_debuff_dict[k]] += v[0]
                         active_buffs_debuffs.add(k)
 
                 for set_pair in regular_combinations:
@@ -247,31 +266,32 @@ if __name__ == '__main__':
 
                     current_buffs_debuffs = active_buffs_debuffs.copy()
 
-                    sets_key_dict = {'m_BERSERK': 'DM', 'm_SLAYER': 'DM'}
-                    sets_value_dict = {'M': 0.0, 'D': 0.0, 'P': 0.0, 'C': 0.0, 'CD': 0.0, 'F': 0.0, 'DM': 0.0}
+                    sets_dict = {'M': 0.0, 'D': 0.0, 'P': 0.0, 'C': 0.0, 'CD': 0.0, 'F': 0.0, 'DM': 0.0}
 
                     for d in (s1, s2):
                         for k, v in d:
-                            if k in sets_value_dict:
-                                sets_value_dict[k] += sum(v)
-                            elif k in sets_key_dict and k not in current_buffs_debuffs:
-                                sets_value_dict[sets_key_dict[k]] += v[0]
+                            if k in sets_dict:
+                                sets_dict[k] += sum(v)
+                            elif k in buff_debuff_dict and k not in current_buffs_debuffs:
+                                sets_dict[buff_debuff_dict[k]] += v[0]
                                 current_buffs_debuffs.add(k)
 
-                    magicka_test = MAGICKA + sets_value_dict['M'] + monster_value_dict['M'] + mundus_dict['M'] + champion_value_dict['M']
-                    spell_damage_test = SPELL_DAMAGE + sets_value_dict['D'] + monster_value_dict['D'] + mundus_dict['D'] + champion_value_dict['D']
-                    penetration_test = PENETRATION + sets_value_dict['P'] + monster_value_dict['P'] + mundus_dict['P']
-                    spell_critical_chance_test = CRITICAL_CHANCE + sets_value_dict['C'] + monster_value_dict['C'] + mundus_dict['C']
-                    spell_critical_damage_test = CRITICAL_DAMAGE + sets_value_dict['CD'] + monster_value_dict['CD'] + mundus_dict['CD'] + champion_value_dict['CD']
-                    flat_damage_test = sets_value_dict['F'] + monster_value_dict['F']
-                    player_damage_amp_test = sets_value_dict['DM'] + monster_value_dict['DM'] + champion_value_dict['DM']
+                    magicka_test = MAGICKA + sets_dict['M'] + monster_dict['M'] + mundus_dict['M'] + champion_value_dict['M']
+                    spell_damage_test = SPELL_DAMAGE + sets_dict['D'] + monster_dict['D'] + mundus_dict['D'] + champion_value_dict['D']
+                    penetration_test = PENETRATION + sets_dict['P'] + monster_dict['P'] + mundus_dict['P']
+                    spell_critical_chance_test = CRITICAL_CHANCE + sets_dict['C'] + monster_dict['C'] + mundus_dict['C']
+                    spell_critical_damage_test = CRITICAL_DAMAGE + sets_dict['CD'] + monster_dict['CD'] + mundus_dict['CD'] + champion_value_dict['CD'] + bonus_dict['CD']
+                    flat_damage_test = sets_dict['F'] + monster_dict['F']
+                    player_damage_amp_test = sets_dict['DM'] + monster_dict['DM'] + champion_value_dict['DM']
+                    magicka_multiplier_test = bonus_dict['MM']
+                    spell_damage_multiplier_test = bonus_dict['SDM']
 
-                    if SOLO:
-                        penetration_test -= ASSASSIN_PENETRATION_PASSIVE
+                    if not SOLO:
+                        penetration_test += ASSASSIN_PENETRATION_PASSIVE
 
                     if set_1.name.endswith('B') or set_2.name.endswith('B') or (set_1.name.endswith('L') and set_2.name.endswith('M')) or (set_1.name.endswith('M') and set_2.name.endswith('L')):
                         
-                        average_damage_done_lst = [monster_armor_test(a, b, magicka_test, spell_damage_test, penetration_test, spell_critical_chance_test, spell_critical_damage_test, flat_damage_test, player_damage_amp_test) for a, b in [(2, 5), (1, 6), (0, 7), (7, 0), (6, 1), (5, 2)]]
+                        average_damage_done_lst = [monster_armor_test(a, b, magicka_test, spell_damage_test, penetration_test, spell_critical_chance_test, spell_critical_damage_test, flat_damage_test, player_damage_amp_test, magicka_multiplier_test, spell_damage_multiplier_test) for a, b in [(2, 5), (1, 6), (0, 7), (7, 0), (6, 1), (5, 2)]]
 
                         for damage, (a, b) in zip(average_damage_done_lst, [(2, 5), (1, 6), (0, 7), (7, 0), (6, 1), (5, 2)]):
                             if damage >= lowest_acceptable_damage:
@@ -279,7 +299,7 @@ if __name__ == '__main__':
 
                     elif set_1.name.endswith('L') and set_2.name.endswith('L'):
 
-                        average_damage_done_lst = [monster_armor_test(a, b, magicka_test, spell_damage_test, penetration_test, spell_critical_chance_test, spell_critical_damage_test, flat_damage_test, player_damage_amp_test) for a, b in [(7, 0), (6, 1), (5, 2)]]
+                        average_damage_done_lst = [monster_armor_test(a, b, magicka_test, spell_damage_test, penetration_test, spell_critical_chance_test, spell_critical_damage_test, flat_damage_test, player_damage_amp_test, magicka_multiplier_test, spell_damage_multiplier_test) for a, b in [(7, 0), (6, 1), (5, 2)]]
 
                         for damage, (a, b) in zip(average_damage_done_lst, [(7, 0), (6, 1), (5, 2)]):
                             if damage >= lowest_acceptable_damage:
@@ -287,7 +307,7 @@ if __name__ == '__main__':
 
                     elif set_1.name.endswith('M') and set_2.name.endswith('M'):
 
-                        average_damage_done_lst = [monster_armor_test(a, b, magicka_test, spell_damage_test, penetration_test, spell_critical_chance_test, spell_critical_damage_test, flat_damage_test, player_damage_amp_test) for a, b in [(2, 5), (1, 6), (0, 7)]]
+                        average_damage_done_lst = [monster_armor_test(a, b, magicka_test, spell_damage_test, penetration_test, spell_critical_chance_test, spell_critical_damage_test, flat_damage_test, player_damage_amp_test, magicka_multiplier_test, spell_damage_multiplier_test) for a, b in [(2, 5), (1, 6), (0, 7)]]
 
                         for damage, (a, b) in zip(average_damage_done_lst, [(2, 5), (1, 6), (0, 7)]):
                             if damage >= lowest_acceptable_damage:

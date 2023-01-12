@@ -98,11 +98,6 @@ M: [1096]
 P: [1487]
 F: [330.0]
 
-Elemental Catalyst L
-M: [1096, 1096]
-C: [0.03]
-CD: [0.15]
-
 Elemental Succession L
 M: [1096, 1096]
 D: [129, 271]
@@ -129,12 +124,12 @@ F: [292.4]
 Grave Inevitability L
 C: [0.03, 0.03]
 D: [129]
-CD: [0.2]
+M_FORCE: [0.2]
 
 Grisly Gourmet M
 D: [129]
 P: [1487]
-CD: [0.066]
+M_FORCE: [0.066]
 
 Gryphon's Reprisal M
 C: [0.03, 0.03]
@@ -163,7 +158,7 @@ C: [0.03]
 Kinras's Wrath M
 D: [129, 129]
 C: [0.03]
-DM: [0.1]
+M_BERSERK: [0.1]
 
 Kvatch Gladiator B
 C: [0.03, 0.03]
@@ -186,7 +181,7 @@ Master Architect L
 M: [1096]
 m_SLAYER: [0.05]
 D: [129]
-DM: [0.030434782608695654]
+M_SLAYER: [0.030434782608695654]
 
 Mechanical Acuity B
 M: [1096]
@@ -220,7 +215,7 @@ Perfected Bahsei's Mania L
 D: [129, 129]
 m_SLAYER: [0.05]
 C: [0.03]
-DM: [0.06]
+DM: [0.09]
 
 Perfected Mantle of Siroria L
 D: [129, 129, 630]
@@ -358,7 +353,7 @@ F: [86.17004031999998]
 War Machine M
 m_SLAYER: [0.05]
 D: [129]
-DM: [0.030434782608695654]
+M_SLAYER: [0.030434782608695654]
 
 War Maiden L
 C: [0.03]

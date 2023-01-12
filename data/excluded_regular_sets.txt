@@ -139,6 +139,7 @@ Undaunted Infiltrator M
 Voidcaller L
 Whorl of the Depths L
 Yandir's Might M
+Elemental Catalyst L
 
 Reason: Alchemical Poison
 Assassin's Guile B
