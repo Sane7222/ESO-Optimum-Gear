@@ -68,9 +68,9 @@ MINOR_VULNERABILITY = 0.05 # DM
 # Pre-computational values
 MAGICKA = BASE_MAGICKA + ATTR_MAGICKA + ARMOUR_MAGICKA_ENCHANTS + WITCH_MOTHER_MAGICKA + HIGH_ELF_MAGICKA_BONUS + CHAMPION_POINT_MAGICKA
 SPELL_DAMAGE = BASE_SPELL_DAMAGE + LEGENDARY_FLAME_STAFF_SPELL_DAMAGE + JEWELRY_SPELL_DAMAGE_ENCHANTS + HIGH_ELF_SPELL_DAMAGE_BONUS + FLAME_STAFF_DAMAGE_ENCHANT_WITH_INFUSED
-PENETRATION = CHAMPION_POINT_PENETRATION + MAJOR_BREACH
-CRITICAL_CHANCE = BASE_SPELL_CRITICAL_CHANCE + CHAMPION_POINT_CRITICAL_CHANCE + LEGENDARY_FLAME_STAFF_CRITICAL_CHANCE + MAJOR_PROPHECY
-CRITICAL_DAMAGE = BASE_SPELL_CRITICAL_DAMAGE + ASSASSIN_CRITICAL_DAMAGE_PASSIVE + MINOR_FORCE
+PENETRATION = CHAMPION_POINT_PENETRATION
+CRITICAL_CHANCE = BASE_SPELL_CRITICAL_CHANCE + CHAMPION_POINT_CRITICAL_CHANCE + LEGENDARY_FLAME_STAFF_CRITICAL_CHANCE
+CRITICAL_DAMAGE = BASE_SPELL_CRITICAL_DAMAGE + ASSASSIN_CRITICAL_DAMAGE_PASSIVE
 
 # User Settings
 SOLO = False
@@ -241,13 +241,13 @@ if __name__ == '__main__':
                 m1 = set_M.general.items()
 
                 if SOLO:
-                    active_buffs_debuffs = {'M_PROPHECY', 'M_SORCERY', 'M_BREACH', 'm_FORCE'} # Loaded with predefined bonuses
-                    bonus_dict = {'CD': 0.0, 'MM': 0.0, 'SDM': 0.2}
+                    active_buffs_debuffs = {'M_PROPHECY', 'M_SORCERY', 'M_BREACH', 'm_FORCE'}
+                    bonus_dict = {'M': 0.0, 'D': 0.0, 'P': 5948.0, 'C': 0.12, 'CD': 0.1, 'F': 0.0, 'DM': 0.0, 'MM': 0.0, 'SDM': 0.2}
                 elif DUMMY:
                     active_buffs_debuffs = {'Aggressive Warhorn', 'Elemental Catalyst', 'M_FORCE', 'm_FORCE', 'M_COURAGE', 'm_COURAGE', 'M_SLAYER', \
                         'M_PROPHECY', 'm_PROPHECY', 'M_SORCERY', 'm_SORCERY', 'm_BERSERK', 'M_BREACH', 'm_BREACH', 'M_VULNERABILITY', 'm_VULNERABILITY', \
-                        'M_SLAYER', 'm_BRITTLE'} # Loaded with predefined bonuses
-                    bonus_dict = {'CD': 0.15, 'MM': 0.1, 'SDM': 0.3}
+                        'm_BRITTLE'}
+                    bonus_dict = {'M': 0.0, 'D': 645.0, 'P': 8922.0, 'C': 0.18, 'CD': 0.55, 'F': 0.0, 'DM': 0.3, 'MM': 0.1, 'SDM': 0.3}
 
                 monster_dict = {'M': 0.0, 'D': 0.0, 'P': 0.0, 'C': 0.0, 'CD': 0.0, 'F': 0.0, 'DM': 0.0}
 
@@ -276,13 +276,13 @@ if __name__ == '__main__':
                                 sets_dict[buff_debuff_dict[k]] += v[0]
                                 current_buffs_debuffs.add(k)
 
-                    magicka_test = MAGICKA + sets_dict['M'] + monster_dict['M'] + mundus_dict['M'] + champion_value_dict['M']
-                    spell_damage_test = SPELL_DAMAGE + sets_dict['D'] + monster_dict['D'] + mundus_dict['D'] + champion_value_dict['D']
-                    penetration_test = PENETRATION + sets_dict['P'] + monster_dict['P'] + mundus_dict['P']
-                    spell_critical_chance_test = CRITICAL_CHANCE + sets_dict['C'] + monster_dict['C'] + mundus_dict['C']
-                    spell_critical_damage_test = CRITICAL_DAMAGE + sets_dict['CD'] + monster_dict['CD'] + mundus_dict['CD'] + champion_value_dict['CD'] + bonus_dict['CD']
-                    flat_damage_test = sets_dict['F'] + monster_dict['F']
-                    player_damage_amp_test = sets_dict['DM'] + monster_dict['DM'] + champion_value_dict['DM']
+                    magicka_test = MAGICKA + sets_dict['M'] + monster_dict['M'] + mundus_dict['M'] + champion_value_dict['M'] + bonus_dict['M']
+                    spell_damage_test = SPELL_DAMAGE + sets_dict['D'] + monster_dict['D'] + mundus_dict['D'] + champion_value_dict['D'] + bonus_dict['D']
+                    penetration_test = PENETRATION + sets_dict['P'] + monster_dict['P'] + mundus_dict['P'] + bonus_dict['P']
+                    spell_critical_chance_test = CRITICAL_CHANCE + sets_dict['C'] + monster_dict['C'] + mundus_dict['C'] + bonus_dict['C']
+                    spell_critical_damage_test = CRITICAL_DAMAGE + sets_dict['CD'] + monster_dict['CD'] + mundus_dict['CD'] + champion_value_dict['CD'] + bonus_dict['CD'] + bonus_dict['CD']
+                    flat_damage_test = sets_dict['F'] + monster_dict['F'] + bonus_dict['F']
+                    player_damage_amp_test = sets_dict['DM'] + monster_dict['DM'] + champion_value_dict['DM'] + bonus_dict['DM']
                     magicka_multiplier_test = bonus_dict['MM']
                     spell_damage_multiplier_test = bonus_dict['SDM']
 
