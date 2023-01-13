@@ -5,7 +5,6 @@ from itertools import combinations
 # Predefined
 SKILL_COEFF_MAX_MAGICKA = 0.1
 SKILL_COEFF_SPELL_DAMAGE = 1.05
-ENEMY_RESISTANCE = 470 # 18200 max enemy resistance | Dummy resistance is 470
 
 # User defined for High Elf
 PLAYER_SUM_PERC_DAMAGE_AMP = 0.0 # Minor Berserk for a player dealing 5% more damage
@@ -17,11 +16,14 @@ PLAYER_PERC_PEN = 0 # Mace ignores 20% of targets resistance
 BASE_MAGICKA = 12000 # Magicka
 ATTR_MAGICKA = 7104
 ARMOUR_MAGICKA_ENCHANTS = 4008
-WITCH_MOTHER_MAGICKA = 2856
 HIGH_ELF_MAGICKA_BONUS = 2000
 CHAMPION_POINT_MAGICKA = 520
 SIPHONING_MAGICKA_PASSIVE = 0.08
 UNDAUNTED_MAGICKA_PASSIVE = 0.02
+
+WITCH_MOTHER_MAGICKA = 2856 # Food
+GHASTLY_EYE_BOWL_MAGICKA = 4592
+SOLITUDE_SALMON_MILLET_SOUP_MAGICKA = 4936
 
 BASE_SPELL_DAMAGE = 1000 # Spell Damage
 LEGENDARY_FLAME_STAFF_SPELL_DAMAGE = 1335
@@ -66,7 +68,7 @@ MINOR_BRITTLE = 0.1 # CD
 MINOR_VULNERABILITY = 0.05 # DM
 
 # Pre-computational values
-MAGICKA = BASE_MAGICKA + ATTR_MAGICKA + ARMOUR_MAGICKA_ENCHANTS + WITCH_MOTHER_MAGICKA + HIGH_ELF_MAGICKA_BONUS + CHAMPION_POINT_MAGICKA
+MAGICKA = BASE_MAGICKA + ATTR_MAGICKA + ARMOUR_MAGICKA_ENCHANTS + HIGH_ELF_MAGICKA_BONUS + CHAMPION_POINT_MAGICKA
 SPELL_DAMAGE = BASE_SPELL_DAMAGE + LEGENDARY_FLAME_STAFF_SPELL_DAMAGE + JEWELRY_SPELL_DAMAGE_ENCHANTS + HIGH_ELF_SPELL_DAMAGE_BONUS + FLAME_STAFF_DAMAGE_ENCHANT_WITH_INFUSED
 PENETRATION = CHAMPION_POINT_PENETRATION
 CRITICAL_CHANCE = BASE_SPELL_CRITICAL_CHANCE + CHAMPION_POINT_CRITICAL_CHANCE + LEGENDARY_FLAME_STAFF_CRITICAL_CHANCE
@@ -75,8 +77,9 @@ CRITICAL_DAMAGE = BASE_SPELL_CRITICAL_DAMAGE + ASSASSIN_CRITICAL_DAMAGE_PASSIVE
 # User Settings
 SOLO = False
 DUMMY = True
+ENEMY_RESISTANCE = 1170 # 18200 max enemy resistance | Dummy resistance is 1170
 NUMBER_OF_CHAMPION_POINTS = 4
-HIGHEST = 8
+HIGHEST = 10
 
 # Define the Set class
 class Set:
@@ -138,7 +141,7 @@ def combinationBuilder(regular_sets):
     
     if SOLO:
         champion_sets = list(combinations(champion_solo.items(), NUMBER_OF_CHAMPION_POINTS)) # Get all possible combinations of items from the champion set
-    else:
+    elif DUMMY:
         champion_sets = list(combinations(champion.items(), NUMBER_OF_CHAMPION_POINTS)) # Get all possible combinations of items from the champion set
 
     champion_combinations = set() # Create a set with all the combinations
@@ -193,8 +196,10 @@ def monster_armor_test(light_pieces, medium_pieces, sets_dict):
     armor_mitigation = 1 - ((((ENEMY_RESISTANCE - SUM_TARGET_DEBUFFS) * (1 - PLAYER_PERC_PEN) - player_flat_penetration) / 50000))
 
     average_damage_done = (SKILL_COEFF_MAX_MAGICKA * maximum_magicka + SKILL_COEFF_SPELL_DAMAGE * spell_damage + sets_dict['F']) * (1 + spell_critical_chance * spell_critical_damage) * (1 + sets_dict['DM']) * (armor_mitigation) * (1 + TARGET_SUM_PERC_DAMAGE_TAKEN)
+
+    stats = {'M': int(maximum_magicka), 'D': int(spell_damage), 'P': int(player_flat_penetration), 'C': round(spell_critical_chance, 4), 'CD': round(spell_critical_damage, 4)}
     
-    return average_damage_done
+    return (average_damage_done, stats)
 
 if __name__ == '__main__':
     t1 = time.time()
@@ -218,7 +223,10 @@ if __name__ == '__main__':
         champion_key_dict = {'ARCANE M': 'M', 'UNTAMED D': 'D', 'WRATHFUL D': 'D', 'BACKSTAB CD': 'CD', 'FIGHT CD': 'CD', 'SINGLE DM': 'DM', 'DIRECT DM': 'DM'}
         champion_value_dict = {'M': MAGICKA, 'D': SPELL_DAMAGE, 'P': PENETRATION, 'C': CRITICAL_CHANCE, 'CD': CRITICAL_DAMAGE, 'F': 0.0, 'DM': 0.0, 'MM': 0.0, 'SDM': 0.0}
 
-        if not SOLO:
+        if SOLO:
+            champion_value_dict['M'] += WITCH_MOTHER_MAGICKA
+        elif DUMMY:
+            champion_value_dict['M'] += SOLITUDE_SALMON_MILLET_SOUP_MAGICKA
             champion_value_dict['P'] += ASSASSIN_PENETRATION_PASSIVE
 
         for k, v in champion_set:
@@ -241,9 +249,8 @@ if __name__ == '__main__':
                     dict_2 = {'M': 0.0, 'D': 0.0, 'P': 5948.0, 'C': 0.12, 'CD': 0.1, 'F': 0.0, 'DM': 0.0, 'MM': 0.0, 'SDM': 0.2}
                 elif DUMMY:
                     active_buffs_debuffs = {'Aggressive Warhorn', 'Elemental Catalyst', 'M_FORCE', 'm_FORCE', 'M_COURAGE', 'm_COURAGE', 'M_SLAYER', \
-                        'M_PROPHECY', 'm_PROPHECY', 'M_SORCERY', 'm_SORCERY', 'm_BERSERK', 'M_BREACH', 'm_BREACH', 'M_VULNERABILITY', 'm_VULNERABILITY', \
-                        'm_BRITTLE'}
-                    dict_2 = {'M': 0.0, 'D': 645.0, 'P': 8922.0, 'C': 0.18, 'CD': 0.55, 'F': 0.0, 'DM': 0.3, 'MM': 0.1, 'SDM': 0.3}
+                        'M_PROPHECY', 'm_PROPHECY', 'M_SORCERY', 'm_SORCERY', 'm_BERSERK', 'M_BREACH', 'm_BREACH', 'M_VULNERABILITY', 'm_VULNERABILITY', 'm_BRITTLE'}
+                    dict_2 = {'M': 0.0, 'D': 645.0, 'P': 0.0, 'C': 0.18, 'CD': 0.55, 'F': 0.0, 'DM': 0.3, 'MM': 0.1, 'SDM': 0.3} # P is 0.0 bc after debuffs remaining res is 1170
                 
                 monster_dict = {k: dict_1[k] + dict_2[k] for k in keys}
 
@@ -272,31 +279,47 @@ if __name__ == '__main__':
                                 sets_dict[buff_debuff_dict[k]] += v[0]
                                 current_buffs_debuffs.add(k)
 
+                    if 'Dragonguard Elite M' in set_1.name or 'Dragonguard Elite M' in set_2.name:
+                        sets_dict['P'] -= ASSASSIN_PENETRATION_PASSIVE
+                        skip = False
+                        for k, v in champion_set:
+                            if 'BACKSTAB CD' in k:
+                                skip = True
+                                break
+                        if skip:
+                            break
+
                     if set_1.name.endswith('B') or set_2.name.endswith('B') or (set_1.name.endswith('L') and set_2.name.endswith('M')) or (set_1.name.endswith('M') and set_2.name.endswith('L')):
                         
                         average_damage_done_lst = [monster_armor_test(a, b, sets_dict) for a, b in [(2, 5), (1, 6), (0, 7), (7, 0), (6, 1), (5, 2)]]
 
-                        for damage, (a, b) in zip(average_damage_done_lst, [(2, 5), (1, 6), (0, 7), (7, 0), (6, 1), (5, 2)]):
+                        for (damage, stats), (a, b) in zip(average_damage_done_lst, [(2, 5), (1, 6), (0, 7), (7, 0), (6, 1), (5, 2)]):
+                            if 'Molag Kena &' in set_M.name:
+                                damage -= (damage/6)
                             if damage >= lowest_acceptable_damage:
-                                build = (damage, set_1, set_2, set_M, mundus_key, champion_set, a, b)
+                                build = (damage, set_1, set_2, set_M, mundus_key, champion_set, a, b, stats)
                                 lst, lowest_acceptable_damage = manage_list(build, lst)
 
                     elif set_1.name.endswith('L') and set_2.name.endswith('L'):
 
                         average_damage_done_lst = [monster_armor_test(a, b, sets_dict) for a, b in [(7, 0), (6, 1), (5, 2)]]
 
-                        for damage, (a, b) in zip(average_damage_done_lst, [(7, 0), (6, 1), (5, 2)]):
+                        for (damage, stats), (a, b) in zip(average_damage_done_lst, [(7, 0), (6, 1), (5, 2)]):
+                            if 'Molag Kena &' in set_M.name:
+                                damage -= (damage/6)
                             if damage >= lowest_acceptable_damage:
-                                build = (damage, set_1, set_2, set_M, mundus_key, champion_set, a, b)
+                                build = (damage, set_1, set_2, set_M, mundus_key, champion_set, a, b, stats)
                                 lst, lowest_acceptable_damage = manage_list(build, lst)
 
                     elif set_1.name.endswith('M') and set_2.name.endswith('M'):
 
                         average_damage_done_lst = [monster_armor_test(a, b, sets_dict) for a, b in [(2, 5), (1, 6), (0, 7)]]
 
-                        for damage, (a, b) in zip(average_damage_done_lst, [(2, 5), (1, 6), (0, 7)]):
+                        for (damage, stats), (a, b) in zip(average_damage_done_lst, [(2, 5), (1, 6), (0, 7)]):
+                            if 'Molag Kena &' in set_M.name:
+                                damage -= (damage/6)
                             if damage >= lowest_acceptable_damage:
-                                build = (damage, set_1, set_2, set_M, mundus_key, champion_set, a, b)
+                                build = (damage, set_1, set_2, set_M, mundus_key, champion_set, a, b, stats)
                                 lst, lowest_acceptable_damage = manage_list(build, lst)
 
     rank = 1
@@ -313,7 +336,7 @@ if __name__ == '__main__':
         print('Champion: ' + str(item[5]))
         print('Light Armor Pieces: ' + str(item[6]))
         print('Medium Armor Pieces: ' + str(item[7]))
-        print()
+        print('Stats: ' + str(item[8]) + '\n')
         rank += 1
 
     t2 = time.time()
