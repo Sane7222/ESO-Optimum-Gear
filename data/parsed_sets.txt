@@ -1,5 +1,5 @@
 Balorgh &
-D: [129]
+SD: [129]
 
 Domihaus &
 M: [1096]
@@ -8,57 +8,57 @@ Ilambris &
 M: [1096]
 
 Kjalnar's Nightmare &
-D: [129]
+SD: [129]
 
 Lady Malygda &
 P: [1487]
 
 Molag Kena &
-D: [129]
+SD: [129]
 
 Slimecraw &
-C: [0.035205479452054794]
+CC: [0.035205479452054794]
 
 Zaan &
-C: [0.03]
+CC: [0.03]
 
 Archer's Mind M
-C: [0.03, 0.03]
+CC: [0.03, 0.03]
 
 Arms of Relequen M
-C: [0.03, 0.03]
+CC: [0.03, 0.03]
 m_SLAYER: [0.05]
 
 Auroran's Thunder L
-D: [129]
+SD: [129]
 P: [1487]
 
 Back-Alley Gourmand L
-C: [0.03, 0.03]
-D: [129]
+CC: [0.03, 0.03]
+SD: [129]
 
 Briarheart M
-C: [0.03, 0.03]
+CC: [0.03, 0.03]
 
 Bright-Throat's Boast L
 M: [1096, 1096]
 
 Burning Spellweave L
 M: [1096]
-D: [129]
-C: [0.03]
+SD: [129]
+CC: [0.03]
 
 Caluurion's Legacy L
-C: [0.03, 0.03]
-D: [129]
+CC: [0.03, 0.03]
+SD: [129]
 
 Claw of the Forest Wraith B
-C: [0.03, 0.03]
-D: [129]
+CC: [0.03, 0.03]
+SD: [129]
 
 Coldharbour's Favorite B
 M: [1096]
-D: [129]
+SD: [129]
 
 Crafty Alfiq L
 M: [1096, 1096, 1096, 2550]
@@ -66,15 +66,15 @@ M: [1096, 1096, 1096, 2550]
 Dark Convergence L
 M: [1096]
 P: [1487]
-D: [129]
+SD: [129]
 
 Defiler M
-D: [129]
-C: [0.03, 0.03]
+SD: [129]
+CC: [0.03, 0.03]
 
 Dragonguard Elite M
-C: [0.03]
-D: [129]
+CC: [0.03]
+SD: [129]
 
 Draugrkin's Grip L
 M: [1096]
@@ -82,236 +82,236 @@ P: [1487]
 
 Elemental Catalyst L
 M: [1096, 1096]
-C: [0.03]
+CC: [0.03]
 
 Elemental Succession L
 M: [1096, 1096]
-D: [129]
+SD: [129]
 
 Essence Thief M
-D: [129]
+SD: [129]
 
 Flame Blossom L
 M: [1096]
-D: [129]
+SD: [129]
 P: [1487]
 
 Flanking Strategist M
-C: [0.03]
-D: [129]
+CC: [0.03]
+SD: [129]
 
 Galerion's Revenge B
-C: [0.03]
-D: [129]
+CC: [0.03]
+SD: [129]
 
 Grave Inevitability L
-C: [0.03, 0.03]
-D: [129]
+CC: [0.03, 0.03]
+SD: [129]
 
 Grisly Gourmet M
-D: [129]
+SD: [129]
 P: [1487]
 
 Gryphon's Reprisal M
-C: [0.03, 0.03]
+CC: [0.03, 0.03]
 P: [1487]
 
 Heartland Conqueror B
-D: [129]
+SD: [129]
 M: [1096]
 
 Hunding's Rage B
-C: [0.03, 0.03]
-D: [300]
+CC: [0.03, 0.03]
+SD: [300]
 
 Icy Conjurer L
 M: [1096]
-D: [129]
+SD: [129]
 P: [1487]
 
 Innate Axiom B
-D: [129]
-C: [0.03]
+SD: [129]
+CC: [0.03]
 
 Kinras's Wrath M
-D: [129, 129]
-C: [0.03]
+SD: [129, 129]
+CC: [0.03]
 
 Kvatch Gladiator B
-C: [0.03, 0.03]
-D: [129]
+CC: [0.03, 0.03]
+SD: [129]
 
 Law of Julianos B
-C: [0.03, 0.03]
+CC: [0.03, 0.03]
 M: [1096]
-D: [300]
+SD: [300]
 
 Leviathan M
-C: [0.03, 0.03, 0.0697716894977169]
+CC: [0.03, 0.03, 0.0697716894977169]
 
 Mad Tinkerer L
-C: [0.03, 0.03]
-D: [129]
+CC: [0.03, 0.03]
+SD: [129]
 
 Master Architect L
 M: [1096]
 m_SLAYER: [0.05]
-D: [129]
+SD: [129]
 
 Mechanical Acuity B
 M: [1096]
-D: [129]
+SD: [129]
 
 Morkuldin B
-D: [129]
+SD: [129]
 
 Mother's Sorrow L
 M: [1096]
-C: [0.03, 0.03, 0.0697716894977169]
+CC: [0.03, 0.03, 0.0697716894977169]
 
 New Moon Acolyte B
-C: [0.03]
-D: [129]
+CC: [0.03]
+SD: [129]
 P: [1487]
 
 Order's Wrath B
-C: [0.03, 0.03]
-D: [129]
+CC: [0.03, 0.03]
+SD: [129]
 
 Overwhelming Surge L
 M: [1096]
-D: [129, 129]
+SD: [129, 129]
 
 Perfected Bahsei's Mania L
-D: [129]
+SD: [129]
 m_SLAYER: [0.05]
-C: [0.03]
+CC: [0.03]
 
 Perfected Mantle of Siroria L
-D: [129, 129]
+SD: [129, 129]
 m_SLAYER: [0.05]
 
 Perfected Whorl of the Depths L
-D: [129, 129]
+SD: [129, 129]
 m_SLAYER: [0.05]
 
 Perfected Yandir's Might M
-D: [129, 129]
+SD: [129, 129]
 m_SLAYER: [0.05]
 
 Phylactery's Grasp M
-D: [129]
-C: [0.03, 0.03]
+SD: [129]
+CC: [0.03, 0.03]
 
 Pillar of Nirn M
-C: [0.03]
-D: [129]
+CC: [0.03]
+SD: [129]
 
 Plaguebreak M
 P: [1487]
-D: [129, 129]
+SD: [129, 129]
 
 Robes of Destruction Mastery L
 M: [1096]
-C: [0.03]
-D: [129]
+CC: [0.03]
+SD: [129]
 
 Savage Werewolf M
-D: [129]
+SD: [129]
 
 Scathing Mage L
 M: [1096]
-C: [0.03, 0.03]
+CC: [0.03, 0.03]
 
 Sentry M
-D: [129]
-C: [0.03]
+SD: [129]
+CC: [0.03]
 
 Shacklebreaker B
-D: [129]
+SD: [129]
 M: [2065]
 
 Shadow of the Red Mountain M
-D: [129]
-C: [0.03]
+SD: [129]
+CC: [0.03]
 
 Sheer Venom M
-D: [129, 129]
+SD: [129, 129]
 
 Shield Breaker M
-D: [129]
+SD: [129]
 
 Silks of the Sun L
-C: [0.03]
+CC: [0.03]
 M: [1096]
-D: [129]
+SD: [129]
 
 Sload's Semblance B
 M: [1096]
-D: [129]
+SD: [129]
 
 Spell Strategist L
 M: [1096]
-D: [129, 129]
+SD: [129, 129]
 
 Spider Cultist Cowl L
-C: [0.03]
+CC: [0.03]
 M: [1096]
-D: [129]
+SD: [129]
 
 Spinner's Garments L
 M: [1096, 1096]
-D: [129]
+SD: [129]
 P: [3460]
 
 Spriggan's Thorns M
-D: [129]
+SD: [129]
 P: [3460]
 
 Talfyg's Treachery L
-C: [0.03]
+CC: [0.03]
 M: [1096]
-D: [129]
+SD: [129]
 
 Titanborn Strength M
 P: [1487]
-D: [129]
+SD: [129]
 
 True-Sworn Fury L
-C: [0.03]
-D: [129]
+CC: [0.03]
+SD: [129]
 M: [1096]
 
 Twice-Fanged Serpent M
-D: [129]
-C: [0.03]
+SD: [129]
+CC: [0.03]
 
 Tzogvin's Warband M
-C: [0.03, 0.03]
+CC: [0.03, 0.03]
 P: [1487]
 
 Unfathomable Darkness M
-C: [0.03]
+CC: [0.03]
 P: [1487]
-D: [129]
+SD: [129]
 
 Venomous Smite M
-C: [0.03, 0.03]
-D: [129]
+CC: [0.03, 0.03]
+SD: [129]
 
 Vicecanon of Venom B
-D: [129]
+SD: [129]
 
 War Machine M
 m_SLAYER: [0.05]
-D: [129]
+SD: [129]
 
 War Maiden L
-C: [0.03]
+CC: [0.03]
 M: [1096]
-D: [129]
+SD: [129]
 
 Z'en's Redress L
-D: [129]
+SD: [129]
 M: [1096]
 

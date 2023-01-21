@@ -52,16 +52,16 @@ for line in lines:
 
 for set in monster_sets:
     for item in set.items:
-        if item.startswith('Adds ') and item.endswith(' Weapon and Spell Damage'): # D
+        if item.startswith('Adds ') and item.endswith(' Weapon and Spell Damage'): # SD
             number = re.findall(r'(\d+)', item)[0]
-            set.add_general('D', int(number))
+            set.add_general('SD', int(number))
         elif item.startswith('Adds ') and item.endswith(' Maximum Magicka'): # M
             number = re.findall(r'(\d+)', item)[0]
             set.add_general('M', int(number))
-        elif item.startswith('Adds ') and item.endswith(' Critical Chance'): # C
+        elif item.startswith('Adds ') and item.endswith(' Critical Chance'): # CC
             number = re.findall(r'(\d+)', item)[0]
             number = int(number)/21900
-            set.add_general('C', number)
+            set.add_general('CC', number)
         elif item.startswith('Gain Minor Slayer at all times, increasing your damage done to Dungeon, Trial, and Arena Monsters by 5%.'): # m_SLAYER
             number = 0.05
             set.add_general('m_SLAYER', number)
@@ -81,16 +81,16 @@ monster_sets = filtered_sets
 
 for set in other_sets:
     for item in set.items:
-        if item.startswith('Adds ') and item.endswith(' Weapon and Spell Damage'): # D
+        if item.startswith('Adds ') and item.endswith(' Weapon and Spell Damage'): # SD
             number = re.findall(r'(\d+)', item)[0]
-            set.add_general('D', int(number))
+            set.add_general('SD', int(number))
         elif item.startswith('Adds ') and item.endswith(' Maximum Magicka'): # M
             number = re.findall(r'(\d+)', item)[0]
             set.add_general('M', int(number))
-        elif item.startswith('Adds ') and item.endswith(' Critical Chance'): # C
+        elif item.startswith('Adds ') and item.endswith(' Critical Chance'): # CC
             number = re.findall(r'(\d+)', item)[0]
             number = int(number)/21900
-            set.add_general('C', number)
+            set.add_general('CC', number)
         elif item.startswith('Gain Minor Slayer at all times, increasing your damage done to Dungeon, Trial, and Arena Monsters by 5%.'): # m_SLAYER
             number = 0.05
             set.add_general('m_SLAYER', number)

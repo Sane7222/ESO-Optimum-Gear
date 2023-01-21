@@ -210,3 +210,6 @@ Deadly Strike M
 Diamond's Victory B
 Dro'Zakar's Claws M
 Red Eagle's Fury B
+Bright-Throat's Boast L
+Defiler M
+Phylactery's Grasp M
